@@ -17,11 +17,12 @@ return new class extends Migration
             $table->string('ar_name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->integer('dail_cod');
+            $table->integer('dial_cod');
             $table->integer('phone');
             $table->string('password');
             $table->string('role');
             $table->string('status');
+            
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->int('invoice_num');
+
+            $table->foreignId('order_id')->constrained('orders');
+
             $table->timestamps();
             $table->softDeletes();
         });

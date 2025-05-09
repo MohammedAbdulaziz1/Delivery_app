@@ -18,6 +18,9 @@ return new class extends Migration
             $table->text('description');
             $table->double('price');
             $table->string('status');
+
+            $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->int('customer_id');
             $table->int('driver_id');
-            $table->int('resturant_id');
+            $table->int('restaurant_id');
             $table->string('status');
+
+            $table->foreignId('user_id')->constrained('users');
+
             $table->timestamps();
             $table->softDeletes();
         });
