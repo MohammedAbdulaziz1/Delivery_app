@@ -3,12 +3,18 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enums\UserRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Types\Relations\Role;
+use Illuminate\Validation\Rules\Enum;
 
 class User extends Authenticatable
 {
+    
+    
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -22,6 +28,7 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -43,6 +50,25 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRoles::class,
         ];
     }
+
+    public function addresses(){
+        return $this->hasMany(Address::class);
+    }
+    
+    public function restaurants(){
+        return $this->hasOne(Restaurant::class)->where('role', UserRoles::RESTAURANT->value );
+        
+    }
+
+    public function customerOrder(){
+        return $this->hasMany(Order::class)->where('role', UserRoles::CUSTOMER->value );
+    }
+    
+    public function driverOrder(){
+        return $this->hasMany(Order::class)->where('role', UserRoles::DRIVER->value );
+    }
+
 }
