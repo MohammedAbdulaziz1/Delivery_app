@@ -8,7 +8,11 @@ import { FormEventHandler } from 'react';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+        en_name: '',
+        ar_name: '',
+        dial_cod: '',
+        phone: '',
+
         email: '',
         password: '',
         password_confirmation: '',
@@ -28,21 +32,73 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                    <InputLabel htmlFor="en_name" value="English Name" />
 
                     <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
+                        id="en_name"
+                        name="en_name"
+                        value={data.en_name}
                         className="mt-1 block w-full"
-                        autoComplete="name"
+                        autoComplete="en_name"
                         isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e) => setData('en_name', e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.en_name} className="mt-2" />
                 </div>
+
+                <div>
+                    <InputLabel htmlFor="ar_name" value="ArabicName" />
+
+                    <TextInput
+                        id="ar_name"
+                        name="ar_name"
+                        value={data.ar_name}
+                        className="mt-1 block w-full"
+                        autoComplete="ar_name"
+                        isFocused={true}
+                        onChange={(e) => setData('ar_name', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.ar_name} className="mt-2" />
+                </div>
+                
+                <div>
+                    <InputLabel htmlFor="dial_cod" value="dial_cod" />
+
+                    <TextInput
+                        id="dial_cod"
+                        name="dial_cod"
+                        value={data.dial_cod}
+                        className="mt-1 block w-full"
+                        autoComplete="dial_cod"
+                        isFocused={true}
+                        onChange={(e) => setData('dial_cod', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.dial_cod} className="mt-2" />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="phone" value="Phone" />
+
+                    <TextInput
+                        id="phone"
+                        name="phone"
+                        value={data.phone}
+                        className="mt-1 block w-full"
+                        autoComplete="phone"
+                        isFocused={true}
+                        onChange={(e) => setData('phone', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.phone} className="mt-2" />
+                </div>
+
 
                 <div className="mt-4">
                     <InputLabel htmlFor="email" value="Email" />
