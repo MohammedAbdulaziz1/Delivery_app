@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('en_name');
             $table->string('ar_name');
-            $table->integer('phone');
+            $table->string('phone');
             $table->integer('dial_cod');
 
             $table->foreignId('owner_id')->constrained('users');            
