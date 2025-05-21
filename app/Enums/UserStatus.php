@@ -13,4 +13,6 @@ enum UserStatus : string
             self::INACTIVE => "Inactive",
         };
     }
+
+   
 }

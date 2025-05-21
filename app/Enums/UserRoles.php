@@ -17,4 +17,5 @@ enum UserRoles : string
             self::DRIVER => "şöför",
         };
     }
+
 }
