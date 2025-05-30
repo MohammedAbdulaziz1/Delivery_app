@@ -7,7 +7,7 @@ import { PropsWithChildren, ReactNode, useState } from 'react';
 import { Head } from '@inertiajs/react';
 import { SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar"
 import { AppSidebar } from "@/Components/SideBar"
-import { Input } from "@/Components/ui/input"
+import { Toaster } from '@/Components/ui/sonner'; 
 
 export default function Authenticated({
     header,
@@ -25,6 +25,9 @@ export default function Authenticated({
         <main className=' flex-1'>
             <div className="min-h-screen bg-gray-100">
                     {children}
+                    
+            <Toaster position={'top-right'} />
+            
             </div>
         </main>
         </SidebarProvider>

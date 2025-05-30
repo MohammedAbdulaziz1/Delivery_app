@@ -1,6 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head  } from '@inertiajs/react';
-import { Customer } from '@/types';
+import { Head , Link , router } from '@inertiajs/react';
+import { Customer, User } from '@/types';
+import { Button , buttonVariants  } from '@/components/ui/button';
+import { toast } from 'sonner'; 
 
 import {
     Table,
@@ -16,6 +18,14 @@ import {
 
 export default function Index({ users }: { users: Customer[] }) {
 
+    const deleteCustomer = (id: number) => { 
+        console.log(id);
+        
+        if (confirm('Are you sure?')) {
+            router.delete(route('customer.destroy', { id }));
+            toast.success('Customer deleted successfully'); 
+        }
+    }
 
     return (
         <AuthenticatedLayout
@@ -42,6 +52,7 @@ export default function Index({ users }: { users: Customer[] }) {
                                 <TableHead className="w-[100px]">Name</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>Action</TableHead>
 
                                 </TableRow>
                             </TableHeader>
@@ -52,16 +63,20 @@ export default function Index({ users }: { users: Customer[] }) {
                                     <TableCell className="font-medium">{user.email}</TableCell>
                                     <TableCell className="font-medium">{user.status}</TableCell>
 
-                
-                                </TableRow>
+                                    <TableCell className="flex flex-row gap-x-2 text-right">
+                                            <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteCustomer(user.id)}>
+                                                Delete
+                                            </Button>
+                                    </TableCell>
+                                    </TableRow>
                                 )}
                             </TableBody>
                      </Table>
                             
 
-                        </div>
                     </div>
                 </div>
+            </div>
             </div>
         </AuthenticatedLayout>
     );
