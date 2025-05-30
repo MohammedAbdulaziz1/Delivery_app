@@ -1,8 +1,9 @@
 export interface User {
     id: number;
-    name: string;
+    en_name: string;
     email: string;
     email_verified_at?: string;
+    status: string;
 }
 
 export type PageProps<
@@ -11,4 +12,11 @@ export type PageProps<
     auth: {
         user: User;
     };
+};
+
+export interface Customer {
+    id: number;
+    en_name: string;
+    email: string;
+    status: string;
 };
