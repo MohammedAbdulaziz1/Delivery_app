@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { Customer, User } from '@/types';
+import { Customer, BreadcrumbItem } from '@/types';
 import { Button , buttonVariants  } from '@/components/ui/button';
 import { toast } from 'sonner'; 
 
@@ -14,7 +14,10 @@ import {
     TableRow,
   } from "@/Components/ui/table";
 
-  
+//   const breadcrumbs: BreadcrumbItem[] = [
+//     { title: 'Dashboard', href: '/dashboard' },
+//     { title: 'Customers', href: '/customer' },
+// ];  
 
 export default function Index({ users }: { users: Customer[] }) {
 
@@ -28,15 +31,19 @@ export default function Index({ users }: { users: Customer[] }) {
     }
 
     return (
-        <AuthenticatedLayout
+        <AuthenticatedLayout 
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
                     Customer
                 </h2>
-            }
+            }    
         >
             <Head title="Customer" />
 
+                        <div className={'mt-8'}>
+                <Link className={buttonVariants({ variant: 'outline' })} href="/customer/create">
+                    Create Customer
+                </Link>
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -64,6 +71,11 @@ export default function Index({ users }: { users: Customer[] }) {
                                     <TableCell className="font-medium">{user.status}</TableCell>
 
                                     <TableCell className="flex flex-row gap-x-2 text-right">
+                                    <Link className={buttonVariants({ variant: 'default' })}
+                                        href={`/customer/${user.id}/edit`}>
+                                        Edit
+                                    </Link>
+
                                             <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteCustomer(user.id)}>
                                                 Delete
                                             </Button>
@@ -74,6 +86,7 @@ export default function Index({ users }: { users: Customer[] }) {
                      </Table>
                             
 
+                        </div>
                     </div>
                 </div>
             </div>

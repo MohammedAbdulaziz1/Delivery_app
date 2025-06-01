@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Inertia\Inertia;
+use App\Enums\UserRoles;
+use App\Enums\UserStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
-use App\Models\User;
 
 class CustomerController extends Controller
 {
@@ -35,6 +38,18 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
+        $user = User::create([
+            'en_name' => $request->en_name,
+            'ar_name' => $request->ar_name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'dial_cod' => $request->dial_cod,
+            'phone' => $request->phone,
+            'role' => UserRoles::CUSTOMER,
+            'status' => UserStatus::ACTIVE,
+
+        ]);
+        
         User::create($request->validated());
  
         return redirect()->route('customer.index');
@@ -52,10 +67,10 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(User $customer)
     {
-        return Inertia::render('Users/Edit', [
-            'customer' => $user,
+        return Inertia::render('customer/Edit', [
+            'user' => $customer,
         ]);
 
     }
@@ -63,9 +78,9 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCustomerRequest $request, User $user)
+    public function update(UpdateCustomerRequest $request, User $customer)
     {
-        $user->update($request->validated());
+        $customer->update($request->validated());
  
         return redirect()->route('customer.index');
 
