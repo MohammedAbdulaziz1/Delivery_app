@@ -27,7 +27,18 @@ export interface Customer {
     status: string;
 };
 
-// export interface BreadcrumbItem {
-//     title: string;
-//     href: string;
-// }
+export interface Restaurant {
+    id: number;
+    en_name: string;
+    ar_name: string;
+    dial_cod: string;
+    phone:string;
+    password:string;
+    password_confirmation:string;
+};
+
+
+export interface BreadcrumbItem {
+    title: string;
+    href: string;
+}
