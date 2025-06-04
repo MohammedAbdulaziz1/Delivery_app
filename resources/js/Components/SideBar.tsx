@@ -15,22 +15,22 @@ import {
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: route('dashboard'),
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "Customers",
+    url: route('customer.index'),
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
+    title: "Restaurants",
+    url: route('restaurants.index'),
     icon: Calendar,
   },
   {
-    title: "Search",
-    url: "#",
+    title: "Driver",
+    url: route('drivers.index'),
     icon: Search,
   },
   {

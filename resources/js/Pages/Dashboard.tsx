@@ -1,8 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head , Link , router} from '@inertiajs/react';
 import { SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar"
 import { AppSidebar } from "@/Components/SideBar"
-import { Input } from "@/Components/ui/input"
+import { Input } from "@/components/ui/input"
+import { Button , buttonVariants  } from '@/components/ui/button';
+
 
 export default function Dashboard() {
     return (
@@ -20,6 +22,10 @@ export default function Dashboard() {
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             You're logged in!
+                            <Link className={buttonVariants({ variant: 'default' })} href="/customer">
+                                 Customer
+                            </Link>
+
                         </div>
                     </div>
                 </div>

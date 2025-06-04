@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('en_name');
             $table->string('ar_name');
             $table->text('description');
-            $table->double('price');
+            $table->decimal('price',8 ,2);
             $table->string('status');
 
             $table->foreignId('restaurant_id')->constrained('restaurants')->cascadeOnDelete();

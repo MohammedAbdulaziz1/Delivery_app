@@ -49,8 +49,8 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'dial_cod' => $request->dial_cod,
             'phone' => $request->phone,
-            'role' => UserRoles::CUSTOMER->value,
-            'status' => UserStatus::ACTIVE->value,
+            'role' => UserRoles::CUSTOMER,
+            'status' => UserStatus::ACTIVE,
 
         ]);
 

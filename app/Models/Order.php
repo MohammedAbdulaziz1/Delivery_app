@@ -3,10 +3,21 @@
 namespace App\Models;
 
 use App\Enums\UserRoles;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    use HasFactory;
+    
+    protected $fillable = [
+        'status',
+        'customer_id',
+        'driver_id',
+        'restaurant_id',
+        'product_id',
+    ];
+
     public function customer(){
         return $this->belongsTo(User::class)->where('role', UserRoles::CUSTOMER);
     }

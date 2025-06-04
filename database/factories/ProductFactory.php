@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Enums\UserStatus;
+use App\Models\Order;
 use App\Models\Restaurant;
 use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,7 +28,7 @@ class ProductFactory extends Factory
             // 'status' => UserStatus::all()[array_rand(UserStatus::all())],
             // 'status' => Arr::random(UserStatus::all()),
             'status' => Arr::random(UserStatus::cases())->value,
-            'restaurant_id'=> Restaurant::factory()
+            'restaurant_id'=> Restaurant::factory(),
         ];
     }
 }

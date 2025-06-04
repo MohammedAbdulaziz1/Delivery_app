@@ -20,7 +20,7 @@ class CustomerController extends Controller
     public function index()
     {
         return Inertia::render('customer/Index', [
-            'users' => User::all(),
+            'users' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->get(),
         ]);
     }
 
@@ -38,7 +38,7 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        $user = User::create([
+        User::create([
             'en_name' => $request->en_name,
             'ar_name' => $request->ar_name,
             'email' => $request->email,

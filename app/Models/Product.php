@@ -17,6 +17,7 @@ class Product extends Model
         'price',
         'status',
         'restaurant_id',
+        'order_id',
    ];
 
    public function casts(){
