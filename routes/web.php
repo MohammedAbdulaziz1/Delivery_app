@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\RestaurantController;
 
 Route::get('/', function () {
@@ -37,6 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('/customer', CustomerController::class,);
     Route::resource('/restaurants', RestaurantController::class,);
+    Route::resource('/drivers', DriverController::class,);
 });
 
 require __DIR__.'/auth.php';

@@ -9,19 +9,20 @@ use App\Enums\UserStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\StoreCustomerRequest;
-use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Requests\StoreDriverRequest;
+use App\Http\Requests\UpdateDriverRequest;
 
-class CustomerController extends Controller
+class DriverController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Inertia::render('customer/Index', [
-            'users' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->get(),
+        return Inertia::render('Drivers/Index', [
+            'drivers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::DRIVER)->get(),
         ]);
+
     }
 
     /**
@@ -29,14 +30,14 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return Inertia::render('customer/Create');
+        return Inertia::render('Drivers/Create');
 
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCustomerRequest $request)
+    public function store(StoreDriverRequest $request)
     {
         User::create([
             'en_name' => $request->en_name,
@@ -45,31 +46,31 @@ class CustomerController extends Controller
             'password' => Hash::make($request->password),
             'dial_cod' => $request->dial_cod,
             'phone' => $request->phone,
-            'role' => UserRoles::CUSTOMER,
+            'role' => UserRoles::DRIVER,
             'status' => UserStatus::ACTIVE,
 
         ]);
         
  
-        return redirect()->route('customer.index');
+        return redirect()->route('drivers.index');
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
-        
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $customer)
+    public function edit(User $driver)
     {
-        return Inertia::render('customer/Edit', [
-            'user' => $customer,
+        return Inertia::render('Drivers/Edit', [
+            'driver' => $driver,
         ]);
 
     }
@@ -77,22 +78,22 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCustomerRequest $request, User $customer)
+    public function update(UpdateDriverRequest $request, User $driver)
     {
-        $customer->update($request->validated());
+        $driver->update($request->validated());
  
-        return redirect()->route('customer.index');
+        return redirect()->route('drivers.index');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $customer)
+    public function destroy(User $driver)
     {
-        $customer->delete();
+        $driver->delete();
  
-        return redirect()->route('customer.index');
+        return redirect()->route('drivers.index');
 
     }
 }
