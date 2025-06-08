@@ -29,8 +29,8 @@ class StoreCustomerRequest extends FormRequest
             'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'max:255'],
             'password_confirmation' => ['required', 'string', 'max:255'],
-            'role' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:255'],
+            'role' => ['string', 'max:255'],
+            'status' => ['string', 'max:255'],
 
         ];
     }

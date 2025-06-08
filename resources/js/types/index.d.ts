@@ -51,6 +51,21 @@ export interface Restaurant {
     password_confirmation:string;
 };
 
+export interface Order {
+    id: number;
+    status: string;
+};
+
+export interface Product {
+    id: number;
+    en_name: string;
+    ar_name: string;
+    description: string;
+    price:number;
+    status:string;
+};
+
+
 
 export interface BreadcrumbItem {
     title: string;

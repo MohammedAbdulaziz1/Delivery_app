@@ -33,7 +33,7 @@ export default function Create() {
     const createCustomer: FormEventHandler = (e) => {
         e.preventDefault();
  
-        post(route('customer.store'), {
+        post(route('customers.store'), {
             forceFormData: true,
             preserveScroll: true,
             onSuccess: () => {

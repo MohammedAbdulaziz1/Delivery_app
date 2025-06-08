@@ -17,23 +17,23 @@ type EditCustomerForm = {
     password_confirmation?: string;
 };
  
-export default function Edit({ user }: { user : Customer }) {
+export default function Edit({ customer }: { customer : Customer }) {
     const customerName = useRef<HTMLInputElement>(null);
  
     const { data, setData, errors, put, reset, processing } = useForm<Required<EditCustomerForm>>({
-        en_name: user.en_name,
-        ar_name:user.ar_name,
-        dial_cod:user.dial_cod,
-        phone:user.phone,
-        email:user.email,
-        password:user.password,
-        password_confirmation:user.password_confirmation,
+        en_name: customer.en_name,
+        ar_name:customer.ar_name,
+        dial_cod:customer.dial_cod,
+        phone:customer.phone,
+        email:customer.email,
+        password:customer.password,
+        password_confirmation:customer.password_confirmation,
     });
  
     const EditCustomer: FormEventHandler = (e) => {
         e.preventDefault();
  
-        put(route('customer.update', user.id), {
+        put(route('customers.update', customer.id), {
             preserveScroll: true,
             onSuccess: () => {
                 reset();

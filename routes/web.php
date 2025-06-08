@@ -1,11 +1,14 @@
 <?php
 
 use Inertia\Inertia;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\DriverController;
 use App\Http\Controllers\RestaurantController;
 
 Route::get('/', function () {
@@ -36,9 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/customer', CustomerController::class,);
+    Route::resource('/customers', CustomerController::class,);
     Route::resource('/restaurants', RestaurantController::class,);
     Route::resource('/drivers', DriverController::class,);
+    Route::resource('/orders', OrderController::class,);
+    Route::resource('/products', ProductController::class,);
 });
 
 require __DIR__.'/auth.php';

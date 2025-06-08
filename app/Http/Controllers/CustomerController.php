@@ -19,8 +19,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return Inertia::render('customer/Index', [
-            'users' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->get(),
+        return Inertia::render('Customers/Index', [
+            'customers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->get(),
         ]);
     }
 
@@ -29,8 +29,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return Inertia::render('customer/Create');
-
+        return Inertia::render('Customers/Create');
     }
 
     /**
@@ -51,7 +50,7 @@ class CustomerController extends Controller
         ]);
         
  
-        return redirect()->route('customer.index');
+        return redirect()->route('customers.index');
 
     }
 
@@ -68,8 +67,8 @@ class CustomerController extends Controller
      */
     public function edit(User $customer)
     {
-        return Inertia::render('customer/Edit', [
-            'user' => $customer,
+        return Inertia::render('Customers/Edit', [
+            'customer' => $customer,
         ]);
 
     }
@@ -81,7 +80,7 @@ class CustomerController extends Controller
     {
         $customer->update($request->validated());
  
-        return redirect()->route('customer.index');
+        return redirect()->route('customers.index');
 
     }
 
@@ -92,7 +91,7 @@ class CustomerController extends Controller
     {
         $customer->delete();
  
-        return redirect()->route('customer.index');
+        return redirect()->route('customers.index');
 
     }
 }
