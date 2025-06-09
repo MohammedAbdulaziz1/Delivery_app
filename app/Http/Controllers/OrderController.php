@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         return Inertia::render('Orders/Index', [
-            'orders' => Order::select('id','status')->get(),
+            'orders' => Order::select('id','status','customer_id','restaurant_id','driver_id')->get(),
         ]);
 
     }

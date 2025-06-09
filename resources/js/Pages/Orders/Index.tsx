@@ -30,9 +30,9 @@ export default function Index({ orders }: { orders: Order[] }) {
                 </h2>
             }    
         >
-            <Head title="Order" />
+            <Head title="Order" />   
 
-
+                                        {/* Restuarant, Driver and customer  name , tot_price */}
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
@@ -45,6 +45,9 @@ export default function Index({ orders }: { orders: Order[] }) {
                             <TableHeader>
                                 <TableRow>
                                 <TableHead>Order ID</TableHead>
+                                <TableHead>Customer ID</TableHead>
+                                <TableHead>Restaurant ID</TableHead>
+                                <TableHead>Driver ID</TableHead>
                                 <TableHead>Status</TableHead>
 
                                 </TableRow>
@@ -53,6 +56,9 @@ export default function Index({ orders }: { orders: Order[] }) {
                                 {orders.map((order) => 
                                     <TableRow key={order.id}>
                                     <TableCell className="font-medium">{order.id}</TableCell>
+                                    <TableCell className="font-medium">{order.customer_id}</TableCell>
+                                    <TableCell className="font-medium">{order.restaurant_id}</TableCell>
+                                    <TableCell className="font-medium">{order.driver_id}</TableCell>
                                     <TableCell className="font-medium">{order.status}</TableCell>
 
                                     </TableRow>

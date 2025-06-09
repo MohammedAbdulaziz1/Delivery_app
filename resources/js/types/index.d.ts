@@ -53,6 +53,9 @@ export interface Restaurant {
 
 export interface Order {
     id: number;
+    customer_id: number;
+    restaurant_id: number;
+    driver_id: number;
     status: string;
 };
 
