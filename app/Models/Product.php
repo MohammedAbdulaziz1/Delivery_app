@@ -22,7 +22,7 @@ class Product extends Model
 
    public function casts(){
         return [
-            'price' => 'decimal',
+            'price' => 'decimal:2',
             'status' => UserStatus::class,
     ];
    }
