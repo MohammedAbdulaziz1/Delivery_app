@@ -31,7 +31,7 @@ class StoreCustomerRequest extends FormRequest
             'password_confirmation' => ['required', 'string', 'max:255'],
             'role' => ['string', 'max:255'],
             'status' => ['string', 'max:255'],
-
+            'media' => ['nullable', 'file', 'max:10240'],
         ];
     }
 }

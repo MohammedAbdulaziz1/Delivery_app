@@ -19,8 +19,9 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        // dd(User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get()->toArray());
         return Inertia::render('Customers/Index', [
-            'customers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->get(),
+            'customers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get(),
         ]);
     }
 
@@ -37,7 +38,7 @@ class CustomerController extends Controller
      */
     public function store(StoreCustomerRequest $request)
     {
-        User::create([
+        $customer = User::create([
             'en_name' => $request->en_name,
             'ar_name' => $request->ar_name,
             'email' => $request->email,
@@ -49,6 +50,9 @@ class CustomerController extends Controller
 
         ]);
         
+        if ($request->hasFile('media')) { 
+            $customer->addMedia($request->file('media'))->toMediaCollection('profileImage');
+        } 
  
         return redirect()->route('customers.index');
 
@@ -67,6 +71,9 @@ class CustomerController extends Controller
      */
     public function edit(User $customer)
     {
+        $customer->load(['media']);
+        $customer->append('mediaFile');
+       
         return Inertia::render('Customers/Edit', [
             'customer' => $customer,
         ]);
@@ -79,6 +86,11 @@ class CustomerController extends Controller
     public function update(UpdateCustomerRequest $request, User $customer)
     {
         $customer->update($request->validated());
+
+        if ($request->hasFile('media')) { 
+            $customer->getFirstMedia()?->delete();
+            $customer->addMedia($request->file('media'))->toMediaCollection();
+        } 
  
         return redirect()->route('customers.index');
 

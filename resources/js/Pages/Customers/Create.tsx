@@ -15,12 +15,13 @@ type CreateCustomerForm = {
     email?: string;
     password?: string;
     password_confirmation?: string;
+    media?: string, 
 }
 
 export default function Create() {
     const customerName = useRef<HTMLInputElement>(null);
     
-    const { data, setData, errors, post, reset, processing } = useForm<Required<CreateCustomerForm>>({ 
+    const { data, setData, errors, post, reset, processing, progress } = useForm<Required<CreateCustomerForm>>({ 
         en_name: '',
         ar_name: '',
         dial_cod: '',
@@ -28,6 +29,7 @@ export default function Create() {
         email: '',
         password: '',
         password_confirmation: '',
+        media: '', 
     }); 
 
     const createCustomer: FormEventHandler = (e) => {
@@ -55,7 +57,7 @@ export default function Create() {
             <form onSubmit={createCustomer} className="space-y-6">
 
                     <div className="grid gap-2">
-                        <Label htmlFor="en_name">Customer en_Name *</Label>
+                        <Label htmlFor="en_name"> English Name *</Label>
  
                         <Input
                             id="en_name"
@@ -71,7 +73,7 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="ar_name">Customer ar_Name *</Label>
+                        <Label htmlFor="ar_name">Arabic Name *</Label>
  
                         <Input
                             id="ar_name"
@@ -87,7 +89,7 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="dial_cod">Customer dial_cod *</Label>
+                        <Label htmlFor="dial_cod"> Dial cod *</Label>
  
                         <Input
                             id="dial_cod"
@@ -103,7 +105,7 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="phone">Customer phone *</Label>
+                        <Label htmlFor="phone"> Phone *</Label>
  
                         <Input
                             id="phone"
@@ -119,7 +121,7 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Customer email *</Label>
+                        <Label htmlFor="email"> Email *</Label>
  
                         <Input
                             id="email"
@@ -135,7 +137,7 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Customer password *</Label>
+                        <Label htmlFor="password"> Password *</Label>
  
                         <Input
                             id="password"
@@ -151,7 +153,7 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Customer password_confirmation *</Label>
+                        <Label htmlFor="password_confirmation"> Password confirmation *</Label>
  
                         <Input
                             id="password_confirmation"
@@ -166,9 +168,27 @@ export default function Create() {
                         <InputError message={errors.password_confirmation} />
                     </div>
 
+                     <div className="grid gap-2">
+                        <Label htmlFor="media">Media</Label>
+                    
+                        <Input
+                            id="media"
+                            onChange={(e) => setData('media', e.target.files[0])}
+                            className="mt-1 block w-full"
+                            type="file"
+                        />
+                    
+                        {progress && (
+                            <progress value={progress.percentage} max="100">
+                                {progress.percentage}%
+                            </progress>
+                        )}
+                    
+                        <InputError message={errors.media} />
+                    </div>
  
                     <div className="flex items-center gap-4">
-                        <Button disabled={processing}>Create Customer</Button>
+                        <Button disabled={processing}>Create </Button>
                     </div>
                 </form>
             </div>

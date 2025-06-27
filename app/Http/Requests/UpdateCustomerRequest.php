@@ -29,6 +29,7 @@ class UpdateCustomerRequest extends FormRequest
             'email' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'max:255'],
             'password_confirmation' => ['required', 'string', 'max:255'],
+            'media' => ['nullable', 'file', 'max:10240'],
         ];
     }
 }

@@ -59,6 +59,7 @@ export default function Index({ customers }: { customers: Customer[] }) {
                                 <TableHead className="w-[100px]">Name</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>File</TableHead> 
                                 <TableHead>Action</TableHead>
 
                                 </TableRow>
@@ -69,6 +70,17 @@ export default function Index({ customers }: { customers: Customer[] }) {
                                     <TableCell className="font-medium">{customer.en_name}</TableCell>
                                     <TableCell className="font-medium">{customer.email}</TableCell>
                                     <TableCell className="font-medium">{customer.status}</TableCell>
+
+                                    <TableCell>{ 
+                                        !customer.mediaFile
+                                            ? ''
+                                            : (
+                                                <a href={customer.mediaFile.original_url} target="_blank">
+                                                    <img src={customer.mediaFile.original_url} className={'w-8 h-8'} />
+                                                </a>
+                                            )
+                                    }
+                                    </TableCell> 
 
                                     <TableCell className="flex flex-row gap-x-2 text-right">
                                     <Link className={buttonVariants({ variant: 'default' })}

@@ -3,16 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRoles;
+use Spatie\MediaLibrary\HasMedia; 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Spatie\MediaLibrary\InteractsWithMedia; 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use App\Enums\UserRoles;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Authenticatable
+class User extends Authenticatable  implements HasMedia 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use SoftDeletes , HasFactory, Notifiable;
+    use SoftDeletes , HasFactory, Notifiable,InteractsWithMedia;
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +30,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'status'
+        'status',
     ];
 
     /**
@@ -53,6 +56,20 @@ class User extends Authenticatable
             'role' => UserRoles::class,
         ];
     }
+
+    protected $appends = [
+        'mediaFile'
+    ];
+ 
+    public function getMediaFileAttribute()
+    {
+        if ($this->relationLoaded('media')) {
+            return $this->getFirstMedia();
+        }
+ 
+        return null;
+    }
+
 
     public function addresses(){
         return $this->hasMany(Address::class);

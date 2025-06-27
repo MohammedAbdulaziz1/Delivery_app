@@ -4,7 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/Components/ui/label';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Customer } from '@/types';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
  
 type EditCustomerForm = {
@@ -15,12 +15,13 @@ type EditCustomerForm = {
     email?: string;
     password?: string;
     password_confirmation?: string;
+    media?: string; 
 };
  
 export default function Edit({ customer }: { customer : Customer }) {
     const customerName = useRef<HTMLInputElement>(null);
  
-    const { data, setData, errors, put, reset, processing } = useForm<Required<EditCustomerForm>>({
+    const { data, setData, errors, put, reset, processing, progress, } = useForm<Required<EditCustomerForm>>({
         en_name: customer.en_name,
         ar_name:customer.ar_name,
         dial_cod:customer.dial_cod,
@@ -28,24 +29,29 @@ export default function Edit({ customer }: { customer : Customer }) {
         email:customer.email,
         password:customer.password,
         password_confirmation:customer.password_confirmation,
+        media: '', 
     });
  
     const EditCustomer: FormEventHandler = (e) => {
         e.preventDefault();
  
-        put(route('customers.update', customer.id), {
-            preserveScroll: true,
-            onSuccess: () => {
-                reset();
-            },
-            onError: (errors) => {
-                if (errors.name) {
-                    reset('en_name');
-                    customerName.current?.focus();
-                }
-            },
-        });
-    };
+        router.post(
+            route('customers.update', customer.id), 
+            { ...data, _method: 'PUT' },
+            {
+                forceFormData: true,
+                preserveScroll: true,
+                onSuccess: () => {
+                    reset();
+                },
+                onError: (errors) => {
+                    if (errors.name) {
+                        reset('en_name');
+                        customerName.current?.focus();
+                    }
+                },
+            });
+        };
     return (
         <AuthenticatedLayout>
             <Head title="Edit Customer" />
@@ -161,6 +167,29 @@ export default function Edit({ customer }: { customer : Customer }) {
                             />
         
                             <InputError message={errors.password_confirmation} />
+                        </div>
+
+                        <div className="grid gap-2">
+                            <Label htmlFor="media">Media</Label>
+                        
+                            <Input
+                                id="media"
+                                onChange={(e) => setData('media', e.target.files[0])}
+                                className="mt-1 block w-full"
+                                type="file"
+                            />
+                        
+                            {progress && (
+                                <progress value={progress.percentage} max="100">
+                                    {progress.percentage}%
+                                </progress>
+                            )}
+                        
+                            <InputError message={errors.media} />
+                        
+                            {!customer.mediaFile ? '' : (
+                                <a href={customer.mediaFile.original_url} target="_blank" className="my-4 mx-auto"><img
+                                    src={customer.mediaFile.original_url} className={'w-32 h-32'} /></a>)}
                         </div>
                     
 
