@@ -28,6 +28,12 @@ export interface Customer {
     mediaFile?: MediaFile; 
 };
 
+export interface RestaurantCard {
+    id: number;
+    name: string;
+    media?: MediaFile;
+}
+
 export interface MediaFile {
     id: number,
     model_type: string,

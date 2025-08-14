@@ -6,10 +6,12 @@ use App\Enums\UserRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Restaurant extends Model
+class Restaurant extends Model implements HasMedia
 {
-   use HasFactory,SoftDeletes;
+   use HasFactory,SoftDeletes,InteractsWithMedia;
 
    protected $fillable = [
     'en_name',
@@ -18,6 +20,20 @@ class Restaurant extends Model
     'dial_cod',
     'owner_id',
 ];
+
+protected $appends = [
+    'mediaFile'
+];
+
+public function getMediaFileAttribute()
+{
+    if ($this->relationLoaded('media')) {
+        return $this->getFirstMedia();
+    }
+
+    return null;
+}
+
    
     public function products(){
         return $this->hasMany(Product::class);

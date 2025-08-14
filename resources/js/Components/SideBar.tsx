@@ -1,4 +1,5 @@
-import { Calendar, Home, Hamburger, Car, Settings, Camera , Users} from "lucide-react"
+import { Home, Hamburger, Car, Settings, Users, LogOut} from "lucide-react"
+import { Link } from '@inertiajs/react';
 
 import {
   Sidebar,
@@ -15,7 +16,7 @@ import {
 const items = [
   {
     title: "Home",
-    url: route('dashboard'),
+    url: route('home'),
     icon: Home,
   },
   {
@@ -61,6 +62,19 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        {/* Logout Button at the bottom */}
+        <div style={{ marginTop: 'auto', padding: '1rem' }}>
+          <Link
+            href={route('logout')}
+            method="post"
+            as="button"
+            className="flex items-center w-full px-4 py-2 text-left text-red-600 hover:bg-gray-100 rounded"
+          >
+            <span style={{ marginRight: '0.5rem' }}><LogOut /></span>
+            Log Out
+          </Link>
+        </div>
       </SidebarContent>
     </Sidebar>
   )

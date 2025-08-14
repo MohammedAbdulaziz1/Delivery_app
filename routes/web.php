@@ -10,6 +10,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\RestaurantController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -44,6 +45,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/drivers', DriverController::class,);
     Route::resource('/orders', OrderController::class,);
     Route::resource('/products', ProductController::class,);
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/menu/{restaurant}', [HomeController::class, 'menu'])->name('menu');
+
 });
 
 require __DIR__.'/auth.php';
