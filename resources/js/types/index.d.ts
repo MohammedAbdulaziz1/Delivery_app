@@ -34,6 +34,15 @@ export interface RestaurantCard {
     media?: MediaFile;
 }
 
+export interface MenuCard {
+    id: number;
+    name: string;
+    media?: MediaFile;
+    description: string;
+    price: number;
+    products: Products[];
+}
+
 export interface MediaFile {
     id: number,
     model_type: string,
@@ -79,6 +88,7 @@ export interface Restaurant {
     phone:string;
     password:string;
     password_confirmation:string;
+    products: Products[];
 };
 
 export interface Order {
@@ -89,7 +99,7 @@ export interface Order {
     status: string;
 };
 
-export interface Product {
+export interface Products {
     id: number;
     en_name: string;
     ar_name: string;

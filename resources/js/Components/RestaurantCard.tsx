@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 import { Card, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import { RestaurantCard as RestaurantCardType } from "@/types";
 
 export function RestaurantCard({ RestaurantCard }: { RestaurantCard: RestaurantCardType }) {
