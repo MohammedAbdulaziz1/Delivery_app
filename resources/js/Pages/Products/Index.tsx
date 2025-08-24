@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
 import { BreadcrumbItem , Product } from '@/types';
-import { Button , buttonVariants  } from '@/components/ui/button';
+import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
 
 import {
@@ -21,6 +21,14 @@ import {
 
 export default function Index({ products }: { products: Product[] }) {
 
+    const deleteProduct = (id: number) => { 
+        console.log(id);
+        
+        if (confirm('Are you sure?')) {
+            router.delete(route('products.destroy', { id }));
+            toast.success('Product deleted successfully'); 
+        }
+    }
 
     return (
         <AuthenticatedLayout 
@@ -31,6 +39,11 @@ export default function Index({ products }: { products: Product[] }) {
             }    
         >
             <Head title="Product" />
+
+            <div className={'mt-8'}>
+                <Link className={buttonVariants({ variant: 'outline' })} href={route('products.create')}>
+                    Create Product
+                </Link>
 
 
             <div className="py-12">
@@ -44,10 +57,11 @@ export default function Index({ products }: { products: Product[] }) {
                             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                             <TableHeader>
                                 <TableRow>
-                                <TableHead>English Name</TableHead>
+                                <TableHead>Name</TableHead>
                                 <TableHead>Description</TableHead>
                                 <TableHead>Price</TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>Action</TableHead>
 
                                 </TableRow>
                             </TableHeader>
@@ -59,12 +73,22 @@ export default function Index({ products }: { products: Product[] }) {
                                     <TableCell className="font-medium">{product.price}</TableCell>
                                     <TableCell className="font-medium">{product.status}</TableCell>
 
+                                    <TableCell className="flex flex-row gap-x-2 text-right">
+                                    <Link className={buttonVariants({ variant: 'default' })}
+                                        href={`/products/${product.id}/edit`}>
+                                        Edit
+                                    </Link>
+
+                                            <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteProduct(product.id)}>
+                                                Delete
+                                            </Button>
+                                    </TableCell>
                                     </TableRow>
                                 )}
                             </TableBody>
                      </Table>
                             
-
+                            </div>
                         </div>
                     </div>
                 </div>

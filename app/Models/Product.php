@@ -5,10 +5,12 @@ namespace App\Models;
 use App\Enums\UserStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
     
     protected $fillable = [
         'en_name',
@@ -19,6 +21,19 @@ class Product extends Model
         'restaurant_id',
         'order_id',
    ];
+
+   protected $appends = [
+       'mediaFile'
+   ];
+
+   public function getMediaFileAttribute()
+   {
+       if ($this->relationLoaded('media')) {
+           return $this->getFirstMedia();
+       }
+
+       return null;
+   }
 
    public function casts(){
         return [
