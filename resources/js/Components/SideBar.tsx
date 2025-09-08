@@ -1,4 +1,4 @@
-import { Home, Hamburger, Car, Settings, Users, LogOut} from "lucide-react"
+import { Home, Hamburger, Car, Settings, Users, LogOut, Package} from "lucide-react"
 import { Link } from '@inertiajs/react';
 
 import {
@@ -38,6 +38,11 @@ const items = [
     title: "Settings",
     url: "#",
     icon: Settings,
+  },
+  {
+    title: "Products",
+    url: route('products.index'),
+    icon: Package,
   },
 ]
 

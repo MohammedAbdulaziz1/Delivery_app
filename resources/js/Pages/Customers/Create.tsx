@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , useForm} from '@inertiajs/react';
 import InputError from '@/Components/InputError';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/Components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { FormEventHandler , useRef } from 'react';

@@ -10,6 +10,7 @@ use App\Enums\UserStatus;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -20,7 +21,7 @@ class ProductController extends Controller
     {
         return Inertia::render('Products/Index', [
             
-            'products' => Product::select('id','en_name','description','price','status')->get(),
+            'products' =>Auth::user()->restaurants->products()->select('id','en_name','description','price','status')->get(),
         ]);
 
     }
@@ -40,16 +41,14 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
     
-         $product = Product::create([
+       $product = Auth::user()->restaurants->products()->create([
             'en_name' => $request->en_name,
             'ar_name' => $request->ar_name,
             'description' => $request->description,
             'price' => $request->price,
             'status' => UserStatus::ACTIVE,
-            'restaurant_id' => 7,
         ]);
      
-
         if ($request->hasFile('media')) { 
             $product->addMedia($request->file('media'))->toMediaCollection('profileImage');
         } 

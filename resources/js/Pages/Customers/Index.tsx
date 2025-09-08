@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
 import { Customer, BreadcrumbItem } from '@/types';
-import { Button , buttonVariants  } from '@/components/ui/button';
+import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
 
 import {

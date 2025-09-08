@@ -18,12 +18,21 @@ class RestaurantController extends Controller
         /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-      return Inertia::render('Restaurants/Index', [
-        'restaurants' => Restaurant::orderBy('created_at','desc')->get(),
-    ]);
+        $search = $request->get('search');
+        
+        $restaurants = Restaurant::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('en_name', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
 
+        return Inertia::render('Restaurants/Index', [
+            'restaurants' => $restaurants,
+            'search' => $search,
+        ]);
     }
 
     /**

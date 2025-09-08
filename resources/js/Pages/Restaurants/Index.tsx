@@ -1,8 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
 import { Customer, BreadcrumbItem, Restaurant } from '@/types';
-import { Button , buttonVariants  } from '@/components/ui/button';
+import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
+import { useState, FormEvent } from 'react';
 
 import {
     Table,
@@ -13,13 +14,17 @@ import {
     TableHeader,
     TableRow,
   } from "@/Components/ui/table";
+import { Input } from '@/components/ui/input';
 
 //   const breadcrumbs: BreadcrumbItem[] = [
 //     { title: 'Dashboard', href: '/dashboard' },
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ restaurants }: { restaurants: Restaurant[] }) {
+
+
+export default function Index({ restaurants, search }: { restaurants: Restaurant[], search?: string }) {
+    const [searchTerm, setSearchTerm] = useState(search || '');
 
     const deleteRestaurant = (id: number) => { 
         console.log(id);
@@ -29,6 +34,23 @@ export default function Index({ restaurants }: { restaurants: Restaurant[] }) {
             toast.success('Restaurant deleted successfully'); 
         }
     }
+
+    const handleSearch = (e: FormEvent) => {
+        e.preventDefault();
+        router.get(route('restaurants.index'), { search: searchTerm }, {
+            preserveState: true,
+            replace: true,
+        });
+    }
+
+    const clearSearch = () => {
+        setSearchTerm('');
+        router.get(route('restaurants.index'), {}, {
+            preserveState: true,
+            replace: true,
+        });
+    }
+  
 
     return (
         <AuthenticatedLayout 
@@ -50,7 +72,31 @@ export default function Index({ restaurants }: { restaurants: Restaurant[] }) {
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
 
+                            {/* search */}
+                            <form onSubmit={handleSearch} className="flex justify-start  mb-4 gap-2">
+                                <Input 
+                                    type="text" 
+                                    placeholder="Search by restaurant name..." 
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="max-w-sm bg-slate-200"
+                                />
+                                <Button type="submit" variant="outline" className="bg-slate-200">Search</Button>
+                                {search && (
+                                    <Button type="button" variant="secondary" onClick={clearSearch}>
+                                        Clear
+                                    </Button>
+                                )}
+                            </form>
                             
+                            {search && (
+                                <div className="mb-4 text-sm text-gray-600">
+                                    Showing results for "{search}" ({restaurants.length} found)
+                                </div>
+                            )}
+
+
+
 
                      <Table>
                             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
@@ -64,22 +110,30 @@ export default function Index({ restaurants }: { restaurants: Restaurant[] }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {restaurants.map((restaurant) => 
-                                    <TableRow key={restaurant.id}>
-                                    <TableCell className="font-medium">{restaurant.en_name}</TableCell>
-                                    <TableCell className="font-medium">{restaurant.phone}</TableCell>
-                                    <TableCell className="font-medium">{restaurant.dial_cod}</TableCell>
+                                {restaurants.length > 0 ? (
+                                    restaurants.map((restaurant) => 
+                                        <TableRow key={restaurant.id}>
+                                        <TableCell className="font-medium">{restaurant.en_name}</TableCell>
+                                        <TableCell className="font-medium">{restaurant.phone}</TableCell>
+                                        <TableCell className="font-medium">{restaurant.dial_cod}</TableCell>
 
-                                    <TableCell className="flex flex-row gap-x-2 text-right">
-                                    <Link className={buttonVariants({ variant: 'default' })}
-                                        href={`/restaurants/${restaurant.id}/edit`}>
-                                        Edit
-                                    </Link>
+                                        <TableCell className="flex flex-row gap-x-2 text-right">
+                                        <Link className={buttonVariants({ variant: 'default' })}
+                                            href={`/restaurants/${restaurant.id}/edit`}>
+                                            Edit
+                                        </Link>
 
-                                            <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteRestaurant(restaurant.id)}>
-                                                Delete
-                                            </Button>
-                                    </TableCell>
+                                                <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteRestaurant(restaurant.id)}>
+                                                    Delete
+                                                </Button>
+                                        </TableCell>
+                                        </TableRow>
+                                    )
+                                ) : (
+                                    <TableRow>
+                                        <TableCell colSpan={4} className="text-center py-8 text-gray-500">
+                                            {search ? `No restaurants found for "${search}"` : 'No restaurants found'}
+                                        </TableCell>
                                     </TableRow>
                                 )}
                             </TableBody>
