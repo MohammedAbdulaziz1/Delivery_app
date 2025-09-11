@@ -16,6 +16,7 @@ Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
+        'canRestaurantRegister' => Route::has('restaurant.register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
@@ -40,14 +41,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('/customers', CustomerController::class,);
-    Route::resource('/restaurants', RestaurantController::class,);
-    Route::resource('/drivers', DriverController::class,);
-    Route::resource('/orders', OrderController::class,);
-    Route::resource('/products', ProductController::class,);
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/menu/{restaurant}', [HomeController::class, 'menu'])->name('menu');
 
 });
 
-require __DIR__.'/auth.php';
+require __DIR__.'/web/auth.php';
+require __DIR__.'/web/admin.php';
+require __DIR__.'/web/customer.php';
+require __DIR__.'/web/driver.php';
+require __DIR__.'/web/restaurant.php';
