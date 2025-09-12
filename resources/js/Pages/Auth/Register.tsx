@@ -49,7 +49,7 @@ export default function Register() {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="ar_name" value="ArabicName" />
+                    <InputLabel htmlFor="ar_name" value="Arabic Name" />
 
                     <TextInput
                         id="ar_name"
@@ -66,7 +66,7 @@ export default function Register() {
                 </div>
                 
                 <div>
-                    <InputLabel htmlFor="dial_cod" value="dial_cod" />
+                    <InputLabel htmlFor="dial_cod" value="Dial Code" />
 
                     <TextInput
                         id="dial_cod"
