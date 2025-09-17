@@ -1,13 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , useForm} from '@inertiajs/react';
 import InputError from '@/Components/InputError';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/Components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { FormEventHandler , useRef } from 'react';
 
 
-type CreateDriverForm = {
+type CreateCustomerForm = {
     en_name?: string;
     ar_name?: string;
     dial_cod?: string;
@@ -15,12 +15,13 @@ type CreateDriverForm = {
     email?: string;
     password?: string;
     password_confirmation?: string;
+    media?: string, 
 }
 
 export default function Create() {
-    const driverName = useRef<HTMLInputElement>(null);
+    const customerName = useRef<HTMLInputElement>(null);
     
-    const { data, setData, errors, post, reset, processing } = useForm<Required<CreateDriverForm>>({ 
+    const { data, setData, errors, post, reset, processing, progress } = useForm<Required<CreateCustomerForm>>({ 
         en_name: '',
         ar_name: '',
         dial_cod: '',
@@ -28,12 +29,13 @@ export default function Create() {
         email: '',
         password: '',
         password_confirmation: '',
+        media: '', 
     }); 
 
-    const createDriver: FormEventHandler = (e) => {
+    const createCustomer: FormEventHandler = (e) => {
         e.preventDefault();
  
-        post(route('drivers.store'), {
+        post(route('admin.customers.store'), {
             forceFormData: true,
             preserveScroll: true,
             onSuccess: () => {
@@ -42,7 +44,7 @@ export default function Create() {
             onError: (errors) => {
                 if (errors.name) {
                     reset('password'); //////////
-                    driverName.current?.focus();
+                    customerName.current?.focus();
                 }
             },
         });
@@ -50,17 +52,17 @@ export default function Create() {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Create Driver" />
+            <Head title="Create Customer" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <form onSubmit={createDriver} className="space-y-6">
+            <form onSubmit={createCustomer} className="space-y-6">
 
                     <div className="grid gap-2">
-                        <Label htmlFor="en_name">Driver en_Name *</Label>
+                        <Label htmlFor="en_name"> English Name *</Label>
  
                         <Input
                             id="en_name"
                             name="en_name"
-                            ref={driverName}
+                            ref={customerName}
                             value={data.en_name}
                             onChange={(e) => setData('en_name', e.target.value)}
                             className="mt-1 block w-full"
@@ -71,12 +73,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="ar_name">Driver ar_Name *</Label>
+                        <Label htmlFor="ar_name">Arabic Name *</Label>
  
                         <Input
                             id="ar_name"
                             name="ar_name"
-                            ref={driverName}
+                            ref={customerName}
                             value={data.ar_name}
                             onChange={(e) => setData('ar_name', e.target.value)}
                             className="mt-1 block w-full"
@@ -87,12 +89,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="dial_cod">Driver dial_cod *</Label>
+                        <Label htmlFor="dial_cod"> Dial cod *</Label>
  
                         <Input
                             id="dial_cod"
                             name="dial_cod"
-                            ref={driverName}
+                            ref={customerName}
                             value={data.dial_cod}
                             onChange={(e) => setData('dial_cod', e.target.value)}
                             className="mt-1 block w-full"
@@ -103,12 +105,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="phone">Driver phone *</Label>
+                        <Label htmlFor="phone"> Phone *</Label>
  
                         <Input
                             id="phone"
                             name="phone"
-                            ref={driverName}
+                            ref={customerName}
                             value={data.phone}
                             onChange={(e) => setData('phone', e.target.value)}
                             className="mt-1 block w-full"
@@ -119,12 +121,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="email">Driver email *</Label>
+                        <Label htmlFor="email"> Email *</Label>
  
                         <Input
                             id="email"
                             name="email"
-                            ref={driverName}
+                            ref={customerName}
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             className="mt-1 block w-full"
@@ -135,12 +137,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password">Driver password *</Label>
+                        <Label htmlFor="password"> Password *</Label>
  
                         <Input
                             id="password"
                             name="password"
-                            ref={driverName}
+                            ref={customerName}
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             className="mt-1 block w-full"
@@ -151,12 +153,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation">Driver password_confirmation *</Label>
+                        <Label htmlFor="password_confirmation"> Password confirmation *</Label>
  
                         <Input
                             id="password_confirmation"
                             name="password_confirmation"
-                            ref={driverName}
+                            ref={customerName}
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
                             className="mt-1 block w-full"
@@ -166,9 +168,27 @@ export default function Create() {
                         <InputError message={errors.password_confirmation} />
                     </div>
 
+                     <div className="grid gap-2">
+                        <Label htmlFor="media">Media</Label>
+                    
+                        <Input
+                            id="media"
+                            onChange={(e) => setData('media', e.target.files[0])}
+                            className="mt-1 block w-full"
+                            type="file"
+                        />
+                    
+                        {progress && (
+                            <progress value={progress.percentage} max="100">
+                                {progress.percentage}%
+                            </progress>
+                        )}
+                    
+                        <InputError message={errors.media} />
+                    </div>
  
                     <div className="flex items-center gap-4">
-                        <Button disabled={processing}>Create Driver</Button>
+                        <Button disabled={processing}>Create </Button>
                     </div>
                 </form>
             </div>

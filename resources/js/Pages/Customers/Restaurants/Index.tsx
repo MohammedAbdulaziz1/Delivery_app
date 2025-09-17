@@ -30,14 +30,14 @@ export default function Index({ restaurants, search }: { restaurants: Restaurant
         console.log(id);
         
         if (confirm('Are you sure?')) {
-            router.delete(route('restaurants.destroy', { id }));
+            router.delete(route('customer.restaurants.destroy', { id }));
             toast.success('Restaurant deleted successfully'); 
         }
     }
 
     const handleSearch = (e: FormEvent) => {
         e.preventDefault();
-        router.get(route('restaurants.index'), { search: searchTerm }, {
+        router.get(route('customer.restaurants.index'), { search: searchTerm }, {
             preserveState: true,
             replace: true,
         });
@@ -45,7 +45,7 @@ export default function Index({ restaurants, search }: { restaurants: Restaurant
 
     const clearSearch = () => {
         setSearchTerm('');
-        router.get(route('restaurants.index'), {}, {
+        router.get(route('customer.restaurants.index'), {}, {
             preserveState: true,
             replace: true,
         });

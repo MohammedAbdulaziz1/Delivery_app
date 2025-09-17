@@ -29,7 +29,7 @@ class RestaurantController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return Inertia::render('Restaurants/Index', [
+        return Inertia::render('Admin/Restaurants/Index', [
             'restaurants' => $restaurants,
             'search' => $search,
         ]);
@@ -40,7 +40,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-      return Inertia::render('Restaurants/Create'); 
+      return Inertia::render('Admin/Restaurants/Create'); 
     }
 
     /**
@@ -72,7 +72,7 @@ class RestaurantController extends Controller
 
       // $restaurant->user()->create(['owner_id'=>1]);
  
-      return redirect()->route('restaurants.index');
+      return redirect()->route('admin.restaurants.index');
 
     }
 
@@ -89,7 +89,7 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-          return Inertia::render('Restaurants/Edit', [
+          return Inertia::render('Admin/Restaurants/Edit', [
             'restaurant' => $restaurant,
         ]);
 
@@ -102,7 +102,7 @@ class RestaurantController extends Controller
     {
       $restaurant->update($request->validated());
  
-      return redirect()->route('restaurants.index');
+      return redirect()->route('admin.restaurants.index');
 
     }
 
@@ -115,7 +115,7 @@ class RestaurantController extends Controller
 
       $restaurant->delete();
  
-      return redirect()->route('restaurants.index');
+      return redirect()->route('admin.restaurants.index');
 
     }
 

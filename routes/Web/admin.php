@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\HomeController;
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('/customers', CustomerController::class,);
     Route::resource('/restaurants', RestaurantController::class,);
     Route::resource('/drivers', DriverController::class,);

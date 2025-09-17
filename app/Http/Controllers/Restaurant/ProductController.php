@@ -19,7 +19,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Products/Index', [
+        return Inertia::render('Restaurant/Products/Index', [
             
             'products' =>Auth::user()->restaurants->products()->select('id','en_name','description','price','status')->get(),
         ]);
@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Products/Create');
+        return Inertia::render('Restaurant/Products/Create');
         
     }
 
@@ -53,7 +53,7 @@ class ProductController extends Controller
             $product->addMedia($request->file('media'))->toMediaCollection('profileImage');
         } 
  
-        return redirect()->route('products.index');
+        return redirect()->route('restaurant.products.index');
 
     }
 
@@ -70,7 +70,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render('Products/Edit', [
+        return Inertia::render('Restaurant/Products/Edit', [
             'product' => $product,
         ]);
 
@@ -83,7 +83,7 @@ class ProductController extends Controller
     {
         $product->update($request->validated());
  
-        return redirect()->route('products.index');
+        return redirect()->route('restaurant.products.index');
 
     }
 
@@ -94,7 +94,7 @@ class ProductController extends Controller
     {
         $product->delete();
  
-        return redirect()->route('products.index');
+        return redirect()->route('restaurant.products.index');
 
     }
 

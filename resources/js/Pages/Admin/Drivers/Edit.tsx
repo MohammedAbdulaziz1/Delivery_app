@@ -1,37 +1,39 @@
 import InputError from '@/Components/InputError';
-import { Button } from '@/components/ui/button';
+import { Button } from '@/Components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/Components/ui/label';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Customer, Restaurant } from '@/types';
+import { Customer, Driver } from '@/types';
 import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler, useRef } from 'react';
  
-type EditRestaurantForm = {
+type EditDriverForm = { 
     en_name?: string;
     ar_name?: string;
     dial_cod?: string;
     phone?: string;
+    email?: string;
     password?: string;
     password_confirmation?: string;
 };
  
-export default function Edit({ restaurant }: { restaurant : Restaurant }) {
-    const restaurantName = useRef<HTMLInputElement>(null);
+export default function Edit({ driver }: { driver : Driver }) {
+    const driverName = useRef<HTMLInputElement>(null);
  
-    const { data, setData, errors, put, reset, processing } = useForm<Required<EditRestaurantForm>>({
-        en_name: restaurant.en_name,
-        ar_name:restaurant.ar_name,
-        dial_cod:restaurant.dial_cod,
-        phone:restaurant.phone,
-        password:restaurant.password,
-        password_confirmation:restaurant.password_confirmation,
+    const { data, setData, errors, put, reset, processing } = useForm<Required<EditDriverForm>>({
+        en_name: driver.en_name,
+        ar_name:driver.ar_name,
+        dial_cod:driver.dial_cod,
+        phone:driver.phone,
+        email:driver.email,
+        password:driver.password,
+        password_confirmation:driver.password_confirmation,
     });
  
-    const EditRestaurant: FormEventHandler = (e) => {
+    const EditDriver: FormEventHandler = (e) => {
         e.preventDefault();
  
-        put(route('restaurants.update', restaurant.id), {
+        put(route('admin.drivers.update', driver.id), {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
@@ -39,24 +41,24 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
             onError: (errors) => {
                 if (errors.name) {
                     reset('en_name');
-                    restaurantName.current?.focus();
+                    driverName.current?.focus();
                 }
             },
         });
     };
     return (
         <AuthenticatedLayout>
-            <Head title="Edit Restaurant" />
+            <Head title="Edit Driver" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-                <form onSubmit={EditRestaurant} className="space-y-6">
+                <form onSubmit={EditDriver} className="space-y-6">
 
                         <div className="grid gap-2">
-                            <Label htmlFor="name">Restaurant Name</Label>
+                            <Label htmlFor="name">Driver Name</Label>
     
                             <Input
                                 id="en_name"
                                 name="en_name"
-                                ref={restaurantName}
+                                ref={driverName}
                                 value={data.en_name}
                                 onChange={(e) => setData('en_name', e.target.value)}
                                 className="mt-1 block w-full"
@@ -66,12 +68,12 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
                         </div>
  
                         <div className="grid gap-2">
-                            <Label htmlFor="ar_name">Restaurant ar_Name *</Label>
+                            <Label htmlFor="ar_name">Driver ar_Name *</Label>
         
                             <Input
                                 id="ar_name"
                                 name="ar_name"
-                                ref={restaurantName}
+                                ref={driverName}
                                 value={data.ar_name}
                                 onChange={(e) => setData('ar_name', e.target.value)}
                                 className="mt-1 block w-full"
@@ -82,12 +84,12 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="dial_cod">Restaurant dial_cod *</Label>
+                            <Label htmlFor="dial_cod">Driver dial_cod *</Label>
         
                             <Input
                                 id="dial_cod"
                                 name="dial_cod"
-                                ref={restaurantName}
+                                ref={driverName}
                                 value={data.dial_cod}
                                 onChange={(e) => setData('dial_cod', e.target.value)}
                                 className="mt-1 block w-full"
@@ -98,12 +100,12 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="phone">Restaurant phone *</Label>
+                            <Label htmlFor="phone">Driver phone *</Label>
         
                             <Input
                                 id="phone"
                                 name="phone"
-                                ref={restaurantName}
+                                ref={driverName}
                                 value={data.phone}
                                 onChange={(e) => setData('phone', e.target.value)}
                                 className="mt-1 block w-full"
@@ -114,12 +116,28 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password">Restaurant password *</Label>
+                            <Label htmlFor="email">Driver email *</Label>
+        
+                            <Input
+                                id="email"
+                                name="email"
+                                ref={driverName}
+                                value={data.email}
+                                onChange={(e) => setData('email', e.target.value)}
+                                className="mt-1 block w-full"
+                                required
+                            />
+        
+                            <InputError message={errors.email} />
+                        </div>
+
+                        <div className="grid gap-2">
+                            <Label htmlFor="password">Driver password *</Label>
         
                             <Input
                                 id="password"
                                 name="password"
-                                ref={restaurantName}
+                                ref={driverName}
                                 value={data.password}
                                 onChange={(e) => setData('password', e.target.value)}
                                 className="mt-1 block w-full"
@@ -130,12 +148,12 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
                         </div>
 
                         <div className="grid gap-2">
-                            <Label htmlFor="password_confirmation">Restaurant password_confirmation *</Label>
+                            <Label htmlFor="password_confirmation">Driver password_confirmation *</Label>
         
                             <Input
                                 id="password_confirmation"
                                 name="password_confirmation"
-                                ref={restaurantName}
+                                ref={driverName}
                                 value={data.password_confirmation}
                                 onChange={(e) => setData('password_confirmation', e.target.value)}
                                 className="mt-1 block w-full"
@@ -147,7 +165,7 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
                     
 
                     <div className="flex items-center gap-4">
-                        <Button disabled={processing}>Update Restaurant</Button>
+                        <Button disabled={processing}>Update Customer</Button>
                     </div>
                 </form>
             </div>

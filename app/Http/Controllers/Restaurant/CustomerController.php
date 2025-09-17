@@ -20,7 +20,7 @@ class CustomerController extends Controller
     public function index()
     {
         // dd(User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get()->toArray());
-        return Inertia::render('Customers/Index', [
+        return Inertia::render('Restaurant/Customers/Index', [
             'customers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get(),
         ]);
     }
@@ -30,7 +30,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Customers/Create');
+        return Inertia::render('Restaurant/Customers/Create');
     }
 
     /**
@@ -54,7 +54,7 @@ class CustomerController extends Controller
             $customer->addMedia($request->file('media'))->toMediaCollection('profileImage');
         } 
  
-        return redirect()->route('customers.index');
+        return redirect()->route('restaurant.customers.index');
 
     }
 
@@ -74,7 +74,7 @@ class CustomerController extends Controller
         $customer->load(['media']);
         $customer->append('mediaFile');
        
-        return Inertia::render('Customers/Edit', [
+        return Inertia::render('Restaurant/Customers/Edit', [
             'customer' => $customer,
         ]);
 
@@ -92,7 +92,7 @@ class CustomerController extends Controller
             $customer->addMedia($request->file('media'))->toMediaCollection();
         } 
  
-        return redirect()->route('customers.index');
+        return redirect()->route('restaurant.customers.index');
 
     }
 
@@ -103,7 +103,7 @@ class CustomerController extends Controller
     {
         $customer->delete();
  
-        return redirect()->route('customers.index');
+        return redirect()->route('restaurant.customers.index');
 
     }
 }

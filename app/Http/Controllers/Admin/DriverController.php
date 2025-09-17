@@ -19,7 +19,7 @@ class DriverController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Drivers/Index', [
+        return Inertia::render('Admin/Drivers/Index', [
             'drivers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::DRIVER)->get(),
         ]);
 
@@ -30,7 +30,7 @@ class DriverController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Drivers/Create');
+        return Inertia::render('Admin/Drivers/Create');
 
     }
 
@@ -52,7 +52,7 @@ class DriverController extends Controller
         ]);
         
  
-        return redirect()->route('drivers.index');
+        return redirect()->route('admin.drivers.index');
 
     }
 
@@ -69,7 +69,7 @@ class DriverController extends Controller
      */
     public function edit(User $driver)
     {
-        return Inertia::render('Drivers/Edit', [
+        return Inertia::render('Admin/Drivers/Edit', [
             'driver' => $driver,
         ]);
 
@@ -82,7 +82,7 @@ class DriverController extends Controller
     {
         $driver->update($request->validated());
  
-        return redirect()->route('drivers.index');
+        return redirect()->route('admin.drivers.index');
 
     }
 
@@ -93,7 +93,7 @@ class DriverController extends Controller
     {
         $driver->delete();
  
-        return redirect()->route('drivers.index');
+        return redirect()->route('admin.drivers.index');
 
     }
 }

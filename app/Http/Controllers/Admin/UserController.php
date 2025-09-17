@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Users/Index', [
+        return Inertia::render('Admin/Users/Index', [
             'users' => User::all(),
         ]);
     }
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Users/Create');
+        return Inertia::render('Admin/Users/Create');
     }
 
     /**
@@ -36,7 +36,7 @@ class UserController extends Controller
     {
         User::create($request->validated());
  
-        return redirect()->route('users.index');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return Inertia::render('Users/Edit', [
+        return Inertia::render('Admin/Users/Edit', [
             'user' => $user,
         ]);
     }
@@ -64,7 +64,7 @@ class UserController extends Controller
     {
         $user->update($request->validated());
  
-        return redirect()->route('users.index');
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -74,6 +74,6 @@ class UserController extends Controller
     {
         $user->delete();
  
-        return redirect()->route('users.index');
+        return redirect()->route('admin.users.index');
     }
 }

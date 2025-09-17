@@ -16,7 +16,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Orders/Index', [
+        return Inertia::render('Admin/Orders/Index', [
             'orders' => Order::select('id','status','customer_id','restaurant_id','driver_id')->get(),
         ]);
 
@@ -27,21 +27,21 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Orders/Create');
+        return Inertia::render('Admin/Orders/Create');
 
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreOrderRequest $request)
+    public function store(Request $request)
     {
         Order::create([
             'status' => UserStatus::ACTIVE,
         ]);
         
  
-        return redirect()->route('orders.index');
+        return redirect()->route('admin.orders.index');
 
     }
 
@@ -58,7 +58,7 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return Inertia::render('Orders/Edit', [
+        return Inertia::render('Admin/Orders/Edit', [
             'order' => $order,
         ]);
 
@@ -67,11 +67,11 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateOrderRequest $request, Order $order)
+    public function update(Request $request, Order $order)
     {
         $order->update($request->validated());
  
-        return redirect()->route('orders.index');
+        return redirect()->route('admin.orders.index');
 
     }
 
@@ -82,7 +82,7 @@ class OrderController extends Controller
     {
         $order->delete();
  
-        return redirect()->route('orders.index');
+        return redirect()->route('admin.orders.index');
 
     }
 

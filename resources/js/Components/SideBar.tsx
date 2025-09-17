@@ -16,22 +16,22 @@ import {
 const items = [
   {
     title: "Home",
-    url: route('home'),
+    url: route('admin.home'),
     icon: Home,
   },
   {
     title: "Customers",
-    url: route('customers.index'),
+    url: route('admin.customers.index'),
     icon: Users,
   },
   {
     title: "Restaurants",
-    url: route('restaurants.index'),
+    url: route('admin.restaurants.index'),
     icon: Hamburger,
   },
   {
     title: "Driver",
-    url: route('drivers.index'),
+    url: route('admin.drivers.index'),
     icon: Car,
   },
   {
@@ -41,7 +41,7 @@ const items = [
   },
   {
     title: "Products",
-    url: route('products.index'),
+    url: route('admin.products.index'),
     icon: Package,
   },
 ]

@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { Customer, BreadcrumbItem, Driver } from '@/types';
-import { Button , buttonVariants  } from '@/components/ui/button';
+import { Customer, BreadcrumbItem } from '@/types';
+import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
 
 import {
@@ -19,14 +19,14 @@ import {
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ drivers }: { drivers: Driver[] }) {
+export default function Index({ customers }: { customers: Customer[] }) {
 
-    const deleteDriver = (id: number) => { 
+    const deleteCustomer = (id: number) => { 
         console.log(id);
         
         if (confirm('Are you sure?')) {
-            router.delete(route('drivers.destroy', { id }));
-            toast.success('Driver deleted successfully'); 
+            router.delete(route('restaurant.customers.destroy', { id }));
+            toast.success('Customer deleted successfully'); 
         }
     }
 
@@ -34,15 +34,15 @@ export default function Index({ drivers }: { drivers: Driver[] }) {
         <AuthenticatedLayout 
             header={
                 <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Driver
+                    Customer
                 </h2>
             }    
         >
-            <Head title="Driver" />
+            <Head title="Customer" />
 
                         <div className={'mt-8'}>
-                <Link className={buttonVariants({ variant: 'outline' })} href={route('drivers.create')}>
-                    Create Driver
+                <Link className={buttonVariants({ variant: 'outline' })} href={route('restaurant.customers.create')}>
+                    Create Customer
                 </Link>
 
             <div className="py-12">
@@ -59,24 +59,36 @@ export default function Index({ drivers }: { drivers: Driver[] }) {
                                 <TableHead className="w-[100px]">Name</TableHead>
                                 <TableHead>Email</TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>File</TableHead> 
                                 <TableHead>Action</TableHead>
 
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {drivers.map((driver) => 
-                                    <TableRow key={driver.id}>
-                                    <TableCell className="font-medium">{driver.en_name}</TableCell>
-                                    <TableCell className="font-medium">{driver.email}</TableCell>
-                                    <TableCell className="font-medium">{driver.status}</TableCell>
+                                {customers.map((customer) => 
+                                    <TableRow key={customer.id}>
+                                    <TableCell className="font-medium">{customer.en_name}</TableCell>
+                                    <TableCell className="font-medium">{customer.email}</TableCell>
+                                    <TableCell className="font-medium">{customer.status}</TableCell>
+
+                                    <TableCell>{ 
+                                        !customer.mediaFile
+                                            ? ''
+                                            : (
+                                                <a href={customer.mediaFile.original_url} target="_blank">
+                                                    <img src={customer.mediaFile.original_url} className={'w-8 h-8'} />
+                                                </a>
+                                            )
+                                    }
+                                    </TableCell> 
 
                                     <TableCell className="flex flex-row gap-x-2 text-right">
                                     <Link className={buttonVariants({ variant: 'default' })}
-                                        href={`/drivers/${driver.id}/edit`}>
+                                        href={route('restaurant.customers.edit', customer.id)}>
                                         Edit
                                     </Link>
 
-                                            <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteDriver(driver.id)}>
+                                            <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteCustomer(customer.id)}>
                                                 Delete
                                             </Button>
                                     </TableCell>

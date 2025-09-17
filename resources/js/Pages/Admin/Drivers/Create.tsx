@@ -7,7 +7,7 @@ import { Label } from '@/Components/ui/label';
 import { FormEventHandler , useRef } from 'react';
 
 
-type CreateCustomerForm = {
+type CreateDriverForm = {
     en_name?: string;
     ar_name?: string;
     dial_cod?: string;
@@ -15,13 +15,12 @@ type CreateCustomerForm = {
     email?: string;
     password?: string;
     password_confirmation?: string;
-    media?: string, 
 }
 
 export default function Create() {
-    const customerName = useRef<HTMLInputElement>(null);
+    const driverName = useRef<HTMLInputElement>(null);
     
-    const { data, setData, errors, post, reset, processing, progress } = useForm<Required<CreateCustomerForm>>({ 
+    const { data, setData, errors, post, reset, processing } = useForm<Required<CreateDriverForm>>({ 
         en_name: '',
         ar_name: '',
         dial_cod: '',
@@ -29,13 +28,12 @@ export default function Create() {
         email: '',
         password: '',
         password_confirmation: '',
-        media: '', 
     }); 
 
-    const createCustomer: FormEventHandler = (e) => {
+    const createDriver: FormEventHandler = (e) => {
         e.preventDefault();
  
-        post(route('customers.store'), {
+        post(route('admin.drivers.store'), {
             forceFormData: true,
             preserveScroll: true,
             onSuccess: () => {
@@ -44,7 +42,7 @@ export default function Create() {
             onError: (errors) => {
                 if (errors.name) {
                     reset('password'); //////////
-                    customerName.current?.focus();
+                    driverName.current?.focus();
                 }
             },
         });
@@ -52,17 +50,17 @@ export default function Create() {
 
     return (
         <AuthenticatedLayout>
-            <Head title="Create Customer" />
+            <Head title="Create Driver" />
             <div className="flex h-full flex-1 flex-col gap-4 rounded-xl p-4">
-            <form onSubmit={createCustomer} className="space-y-6">
+            <form onSubmit={createDriver} className="space-y-6">
 
                     <div className="grid gap-2">
-                        <Label htmlFor="en_name"> English Name *</Label>
+                        <Label htmlFor="en_name">Driver en_Name *</Label>
  
                         <Input
                             id="en_name"
                             name="en_name"
-                            ref={customerName}
+                            ref={driverName}
                             value={data.en_name}
                             onChange={(e) => setData('en_name', e.target.value)}
                             className="mt-1 block w-full"
@@ -73,12 +71,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="ar_name">Arabic Name *</Label>
+                        <Label htmlFor="ar_name">Driver ar_Name *</Label>
  
                         <Input
                             id="ar_name"
                             name="ar_name"
-                            ref={customerName}
+                            ref={driverName}
                             value={data.ar_name}
                             onChange={(e) => setData('ar_name', e.target.value)}
                             className="mt-1 block w-full"
@@ -89,12 +87,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="dial_cod"> Dial cod *</Label>
+                        <Label htmlFor="dial_cod">Driver dial_cod *</Label>
  
                         <Input
                             id="dial_cod"
                             name="dial_cod"
-                            ref={customerName}
+                            ref={driverName}
                             value={data.dial_cod}
                             onChange={(e) => setData('dial_cod', e.target.value)}
                             className="mt-1 block w-full"
@@ -105,12 +103,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="phone"> Phone *</Label>
+                        <Label htmlFor="phone">Driver phone *</Label>
  
                         <Input
                             id="phone"
                             name="phone"
-                            ref={customerName}
+                            ref={driverName}
                             value={data.phone}
                             onChange={(e) => setData('phone', e.target.value)}
                             className="mt-1 block w-full"
@@ -121,12 +119,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="email"> Email *</Label>
+                        <Label htmlFor="email">Driver email *</Label>
  
                         <Input
                             id="email"
                             name="email"
-                            ref={customerName}
+                            ref={driverName}
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             className="mt-1 block w-full"
@@ -137,12 +135,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password"> Password *</Label>
+                        <Label htmlFor="password">Driver password *</Label>
  
                         <Input
                             id="password"
                             name="password"
-                            ref={customerName}
+                            ref={driverName}
                             value={data.password}
                             onChange={(e) => setData('password', e.target.value)}
                             className="mt-1 block w-full"
@@ -153,12 +151,12 @@ export default function Create() {
                     </div>
 
                     <div className="grid gap-2">
-                        <Label htmlFor="password_confirmation"> Password confirmation *</Label>
+                        <Label htmlFor="password_confirmation">Driver password_confirmation *</Label>
  
                         <Input
                             id="password_confirmation"
                             name="password_confirmation"
-                            ref={customerName}
+                            ref={driverName}
                             value={data.password_confirmation}
                             onChange={(e) => setData('password_confirmation', e.target.value)}
                             className="mt-1 block w-full"
@@ -168,27 +166,9 @@ export default function Create() {
                         <InputError message={errors.password_confirmation} />
                     </div>
 
-                     <div className="grid gap-2">
-                        <Label htmlFor="media">Media</Label>
-                    
-                        <Input
-                            id="media"
-                            onChange={(e) => setData('media', e.target.files[0])}
-                            className="mt-1 block w-full"
-                            type="file"
-                        />
-                    
-                        {progress && (
-                            <progress value={progress.percentage} max="100">
-                                {progress.percentage}%
-                            </progress>
-                        )}
-                    
-                        <InputError message={errors.media} />
-                    </div>
  
                     <div className="flex items-center gap-4">
-                        <Button disabled={processing}>Create </Button>
+                        <Button disabled={processing}>Create Driver</Button>
                     </div>
                 </form>
             </div>
