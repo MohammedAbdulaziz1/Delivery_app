@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Enums\UserRoles;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Route;
+use App\Http\Requests\Auth\LoginRequest;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -27,13 +28,30 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request)
     {
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        // return redirect()->intended(route('dashboard', absolute: false));
+                switch ($request->user()) {
+            case $request->user()->role == UserRoles::ADMIN:
+                // move to admin dashboard
+                // $request->user->role = UserRoles::ADMIN; 
+                return redirect(route('admin.home'));
+                break;
+            case $request->user()->role == UserRoles::CUSTOMER:
+                return redirect(route('customer.home'));
+                break;
+            case $request->user()->role == UserRoles::RESTAURANT:
+                return redirect(route('restaurant.home'));
+                break;
+            case $request->user()->role == UserRoles::DRIVER:
+                return redirect(route('driver.home'));
+                break;
+        }
+
     }
 
     /**

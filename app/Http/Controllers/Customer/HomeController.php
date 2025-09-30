@@ -9,17 +9,15 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $restaurants = Restaurant::select('id', 'en_name as name')->with('media')->get();
-        return Inertia::render('Homee/Index', [
-            'restaurants' => $restaurants
+        return Inertia::render('Customers/Home', [
         ]);
     }
     
     public function menu(Restaurant $restaurant)
     {
         $restaurant->load(['media','products']);
-        return Inertia::render('Homee/Menu', [
-            'restaurant' => $restaurant
+        return Inertia::render('Customers/Restaurants/Menu', [
+            'restaurants' => $restaurant
         ]);
     }
 }
