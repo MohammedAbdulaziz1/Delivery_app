@@ -45,9 +45,6 @@ export default function Index({ orders }: { orders: Order[] }) {
                             <TableHeader>
                                 <TableRow>
                                 <TableHead>Order ID</TableHead>
-                                <TableHead>Customer ID</TableHead>
-                                <TableHead>Restaurant ID</TableHead>
-                                <TableHead>Driver ID</TableHead>
                                 <TableHead>Status</TableHead>
 
                                 </TableRow>
@@ -56,9 +53,6 @@ export default function Index({ orders }: { orders: Order[] }) {
                                 {orders.map((order) => 
                                     <TableRow key={order.id}>
                                     <TableCell className="font-medium">{order.id}</TableCell>
-                                    <TableCell className="font-medium">{order.customer_id}</TableCell>
-                                    <TableCell className="font-medium">{order.restaurant_id}</TableCell>
-                                    <TableCell className="font-medium">{order.driver_id}</TableCell>
                                     <TableCell className="font-medium">{order.status}</TableCell>
 
                                     </TableRow>

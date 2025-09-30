@@ -29,7 +29,8 @@ class RestaurantController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return Inertia::render('Customer/Restaurants/Index', [
+            $restaurants->load(['media','products']);
+            return Inertia::render('Customers/Restaurants/Index', [
             'restaurants' => $restaurants,
             'search' => $search,
         ]);
@@ -40,7 +41,7 @@ class RestaurantController extends Controller
      */
     public function create()
     {
-      return Inertia::render('Customer/Restaurants/Create'); 
+      return Inertia::render('Customers/Restaurants/Create'); 
     }
 
     /**
@@ -89,7 +90,7 @@ class RestaurantController extends Controller
      */
     public function edit(Restaurant $restaurant)
     {
-          return Inertia::render('Customer/Restaurants/Edit', [
+          return Inertia::render('Customers/Restaurants/Edit', [
             'restaurant' => $restaurant,
         ]);
 

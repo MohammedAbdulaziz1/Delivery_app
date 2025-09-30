@@ -40,12 +40,16 @@ public function getMediaFileAttribute()
     }
 
     public function owner(){
-        return $this->belongsTo(User::class , 'owner_id')->where('role', UserRoles::RESTAURANT);
+        return $this->belongsTo(User::class , 'owner_id');
     }
 
     public function orders(){
         return $this->hasMany(Order::class);
     }
+
+    // public function customers(){
+    //     return $this->hasMany(User::class);
+    // }
 
 
 }

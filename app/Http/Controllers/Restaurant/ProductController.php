@@ -19,7 +19,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Restaurant/Products/Index', [
+        return Inertia::render('Restaurants/Products/Index', [
             
             'products' =>Auth::user()->restaurants->products()->select('id','en_name','description','price','status')->get(),
         ]);
@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Restaurant/Products/Create');
+        return Inertia::render('Restaurants/Products/Create');
         
     }
 
@@ -70,7 +70,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render('Restaurant/Products/Edit', [
+        return Inertia::render('Restaurants/Products/Edit', [
             'product' => $product,
         ]);
 

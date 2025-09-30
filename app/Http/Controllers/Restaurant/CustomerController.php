@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -20,8 +21,8 @@ class CustomerController extends Controller
     public function index()
     {
         // dd(User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get()->toArray());
-        return Inertia::render('Restaurant/Customers/Index', [
-            'customers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get(),
+        return Inertia::render('Restaurants/Customers/Index', [
+            'customers' => Auth::user()->restaurant->customers()->select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get(),
         ]);
     }
 
@@ -30,7 +31,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Restaurant/Customers/Create');
+        return Inertia::render('Restaurants/Customers/Create');
     }
 
     /**
@@ -74,7 +75,7 @@ class CustomerController extends Controller
         $customer->load(['media']);
         $customer->append('mediaFile');
        
-        return Inertia::render('Restaurant/Customers/Edit', [
+        return Inertia::render('Restaurants/Customers/Edit', [
             'customer' => $customer,
         ]);
 

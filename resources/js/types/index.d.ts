@@ -41,7 +41,7 @@ export interface Product {
 
 export interface RestaurantCard {
     id: number;
-    name: string;
+    en_name: string;
     media?: MediaFile;
 }
 

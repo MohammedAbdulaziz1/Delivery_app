@@ -19,11 +19,11 @@ class Order extends Model
     ];
 
     public function customer(){
-        return $this->belongsTo(User::class , 'customer_id')->where('role', UserRoles::CUSTOMER);
+        return $this->belongsTo(User::class , 'customer_id');
     }
     
     public function driver(){
-        return $this->belongsTo(User::class, 'driver_id')->where('role', UserRoles::DRIVER);
+        return $this->belongsTo(User::class, 'driver_id');
     }
 
     public function restaurant(){

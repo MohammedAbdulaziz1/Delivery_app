@@ -17,11 +17,20 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // dd(User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get()->toArray());
+        $search = $request->get('search');
+        
+        $customers = User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')
+            ->when($search, function ($query, $search) {
+                return $query->where('en_name', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return Inertia::render('Admin/Customers/Index', [
-            'customers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get(),
+            'customers' => $customers,
+            'search' => $search,
         ]);
     }
 

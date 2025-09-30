@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRoles;
 use Spatie\MediaLibrary\HasMedia; 
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia; 
@@ -15,7 +16,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable  implements HasMedia 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use SoftDeletes , HasFactory, Notifiable,InteractsWithMedia;
+    use SoftDeletes , HasFactory, Notifiable,InteractsWithMedia,HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -76,16 +77,20 @@ class User extends Authenticatable  implements HasMedia
     }
     
     public function restaurants(){
-        return $this->hasOne(Restaurant::class , 'owner_id'); //->where('role', UserRoles::RESTAURANT);
+        return $this->hasOne(Restaurant::class , 'owner_id');
         
     }
 
     public function customerOrder(){
-        return $this->hasMany(Order::class)->where('role', UserRoles::CUSTOMER);
+        return $this->hasMany(Order::class , 'customer_id');
     }
     
     public function driverOrder(){
-        return $this->hasMany(Order::class)->where('role', UserRoles::DRIVER);
+        return $this->hasMany(Order::class, 'driver_id');
     }
+
+    // public function restaurant(){
+    //     return $this->hasOne(Restaurant::class); //->where('role', UserRoles::RESTAURANT);
+    // }
 
 }

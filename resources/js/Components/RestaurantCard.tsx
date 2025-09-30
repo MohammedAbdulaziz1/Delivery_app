@@ -8,11 +8,11 @@ export function RestaurantCard({ RestaurantCard }: { RestaurantCard: RestaurantC
         
                 <Card key={RestaurantCard.id} className="w-full max-w-sm">
                     <CardHeader>
-                        <CardTitle>{RestaurantCard.name}</CardTitle>
+                        <CardTitle>{RestaurantCard.en_name}</CardTitle>
                         <CardDescription>
                             <img src={RestaurantCard.media?.original_url || ''} alt="Restaurants Image" className="w-full h-full object-cover"/>
                         </CardDescription>
-                        <Link href={route('menu', { restaurant: RestaurantCard.id })}>
+                        <Link href={route('customer.menu', { restaurant: RestaurantCard.id })}>
                             <Button>
                                 Menu
                             </Button>

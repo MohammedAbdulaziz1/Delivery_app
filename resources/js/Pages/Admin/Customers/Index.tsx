@@ -13,13 +13,17 @@ import {
     TableHeader,
     TableRow,
   } from "@/Components/ui/table";
+import { FormEvent, useState } from 'react';
+import { Input } from '@/components/ui/input';
 
 //   const breadcrumbs: BreadcrumbItem[] = [
 //     { title: 'Dashboard', href: '/dashboard' },
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ customers }: { customers: Customer[] }) {
+export default function Index({ customers, search }: { customers: Customer[], search?: string }) {
+
+    const [searchTerm, setSearchTerm] = useState(search || '');
 
     const deleteCustomer = (id: number) => { 
         console.log(id);
@@ -29,6 +33,23 @@ export default function Index({ customers }: { customers: Customer[] }) {
             toast.success('Customer deleted successfully');
         }
     }
+
+    const handleSearch = (e: FormEvent) => {
+        e.preventDefault();
+        router.get(route('admin.customers.index'), { search: searchTerm }, {
+            preserveState: true,
+            replace: true,
+        });
+    }
+
+    const clearSearch = () => {
+        setSearchTerm('');
+        router.get(route('admin.customers.index'), {}, {
+            preserveState: true,
+            replace: true,
+        });
+    }
+
 
     return (
         <AuthenticatedLayout 
@@ -49,6 +70,28 @@ export default function Index({ customers }: { customers: Customer[] }) {
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
+
+                        <form onSubmit={handleSearch} className="flex justify-start  mb-4 gap-2">
+                                <Input 
+                                    type="text" 
+                                    placeholder="Search by customer name..." 
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="max-w-sm bg-slate-200"
+                                />
+                                <Button type="submit" variant="outline" className="bg-slate-200">Search</Button>
+                                {search && (
+                                    <Button type="button" variant="secondary" onClick={clearSearch}>
+                                        Clear
+                                    </Button>
+                                )}
+                            </form>
+                            
+                            {search && (
+                                <div className="mb-4 text-sm text-gray-600">
+                                    Showing results for "{search}" ({customers.length} found)
+                                </div>
+                            )}
 
                             
 

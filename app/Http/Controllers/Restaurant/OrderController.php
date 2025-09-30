@@ -11,13 +11,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Restaurant/Orders/Index', [
-            'orders' => Order::select('id','status','customer_id','restaurant_id','driver_id')->get(),
+        return Inertia::render('Restaurants/Orders/Index', [
+            'orders' => Auth::user()->restaurants->orders()->get(),
         ]);
 
     }
@@ -27,7 +28,6 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Restaurant/Orders/Create');
 
     }
 
@@ -36,12 +36,6 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        Order::create([
-            'status' => UserStatus::ACTIVE,
-        ]);
-        
- 
-        return redirect()->route('restaurant.orders.index');
 
     }
 
@@ -58,9 +52,6 @@ class OrderController extends Controller
      */
     public function edit(Order $order)
     {
-        return Inertia::render('Restaurant/Orders/Edit', [
-            'order' => $order,
-        ]);
 
     }
 
@@ -69,9 +60,6 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $order->update($request->validated());
- 
-        return redirect()->route('restaurant.orders.index');
 
     }
 
@@ -80,9 +68,6 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $order->delete();
- 
-        return redirect()->route('restaurant.orders.index');
 
     }
 
