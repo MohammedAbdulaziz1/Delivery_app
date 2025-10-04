@@ -1,6 +1,6 @@
 import { Home, Hamburger, Car, Settings, Users, LogOut, Package} from "lucide-react"
 import { Link } from '@inertiajs/react';
-
+import { SidebarItem } from "@/types";
 import {
   Sidebar,
   SidebarContent,
@@ -11,6 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/Components/ui/sidebar"
+import { log } from "console";
 
 // Menu items.
 const items = [
@@ -35,9 +36,9 @@ const items = [
     icon: Car,
   },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Orders",
+    url: route('admin.orders.index'),
+    icon: Package,
   },
   {
     title: "Products",
@@ -46,7 +47,11 @@ const items = [
   },
 ]
 
-export function AppSidebar() {
+export function AppSidebar({sidebar}: {sidebar: SidebarItem[]}) {
+ console.log(sidebar)
+ sidebar.map(item => {console.log(item.title);
+ }) 
+ 
   return (
     <Sidebar>
       <SidebarContent>
@@ -54,10 +59,10 @@ export function AppSidebar() {
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {sidebar.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a href={route(item.routeName)}>
                       <item.icon />
                       <span>{item.title}</span>
                     </a>

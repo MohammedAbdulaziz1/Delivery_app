@@ -8,19 +8,20 @@ import { Head } from '@inertiajs/react';
 import { SidebarProvider, SidebarTrigger } from "@/Components/ui/sidebar"
 import { AppSidebar } from "@/Components/SideBar"
 import { Toaster } from '@/Components/ui/sonner'; 
+import { SidebarItem } from '@/types';
 
 export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
     const user = usePage().props.auth.user;
-
+    const sidebar = usePage().props.sidebar;
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
     return (  
         <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar sidebar={sidebar as SidebarItem[]}/>
             <SidebarTrigger />
         <main className=' flex-1'>
             <div className="min-h-screen bg-gray-100">
