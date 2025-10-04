@@ -20,7 +20,7 @@ class SideBarService
         }
         // dd($user->role->value);
         // dd((config('sidebar'))->get($user->role->value));
-        $sidebar = (config('sidebar'))->get($user->role->value) ?? [];
+        $sidebar = collect(config('sidebar'))->get($user->role->value) ?? [];
         // $sidebar = $sidebar->map(function ($item) use ($user) {
         //     if (isset($item['permission']) && ! $user->can($item['permission'])) {
         //         return null;
