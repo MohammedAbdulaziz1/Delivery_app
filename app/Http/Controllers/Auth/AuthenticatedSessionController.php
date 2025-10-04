@@ -37,8 +37,6 @@ class AuthenticatedSessionController extends Controller
         // return redirect()->intended(route('dashboard', absolute: false));
                 switch ($request->user()) {
             case $request->user()->role == UserRoles::ADMIN:
-                // move to admin dashboard
-                // $request->user->role = UserRoles::ADMIN; 
                 return redirect(route('admin.home'));
                 break;
             case $request->user()->role == UserRoles::CUSTOMER:
@@ -49,6 +47,9 @@ class AuthenticatedSessionController extends Controller
                 break;
             case $request->user()->role == UserRoles::DRIVER:
                 return redirect(route('driver.home'));
+                break;
+            default:
+                return redirect(route('welcome'));
                 break;
         }
 

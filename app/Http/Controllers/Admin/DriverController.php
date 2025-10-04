@@ -20,7 +20,7 @@ class DriverController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Drivers/Index', [
-            'drivers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::DRIVER)->get(),
+            'drivers' => User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::DRIVER)->paginate(5),
         ]);
 
     }

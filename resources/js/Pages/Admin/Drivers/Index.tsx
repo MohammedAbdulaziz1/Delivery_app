@@ -1,8 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { Customer, BreadcrumbItem, Driver } from '@/types';
+import { Customer, BreadcrumbItem, Driver, PaginatedResponse } from '@/types';
 import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
+import { TablePagination } from '@/Components/TablePagination';
 
 import {
     Table,
@@ -19,7 +20,7 @@ import {
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ drivers }: { drivers: Driver[] }) {
+export default function Index({ drivers }: { drivers: PaginatedResponse<Driver> }) {
 
     const deleteDriver = (id: number) => { 
         console.log(id);
@@ -64,7 +65,7 @@ export default function Index({ drivers }: { drivers: Driver[] }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {drivers.map((driver) => 
+                                {drivers.data.map((driver) => 
                                     <TableRow key={driver.id}>
                                     <TableCell className="font-medium">{driver.en_name}</TableCell>
                                     <TableCell className="font-medium">{driver.email}</TableCell>
@@ -85,6 +86,7 @@ export default function Index({ drivers }: { drivers: Driver[] }) {
                                 )}
                             </TableBody>
                      </Table>
+                     <TablePagination resource={drivers} />
                             
 
                         </div>
