@@ -118,7 +118,7 @@ export interface BreadcrumbItem {
     href: string;
 }
 
-export interface PaginatedResponse<T = Driver | null> {
+export interface PaginatedResponse<T> {
     current_page: number;
     data: T[];
     first_page_url: string;

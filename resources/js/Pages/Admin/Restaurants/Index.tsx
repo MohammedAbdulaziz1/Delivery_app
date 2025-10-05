@@ -1,9 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { Customer, BreadcrumbItem, Restaurant } from '@/types';
+import { Customer, BreadcrumbItem, Restaurant, PaginatedResponse } from '@/types';
 import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
 import { useState, FormEvent } from 'react';
+import { TablePagination } from '@/Components/TablePagination';
 
 import {
     Table,
@@ -23,7 +24,7 @@ import { Input } from '@/components/ui/input';
 
 
 
-export default function Index({ restaurants, search }: { restaurants: Restaurant[], search?: string }) {
+export default function Index({ restaurants, search }: { restaurants: PaginatedResponse<Restaurant>, search?: string }) {
     const [searchTerm, setSearchTerm] = useState(search || '');
 
     const deleteRestaurant = (id: number) => { 
@@ -110,8 +111,8 @@ export default function Index({ restaurants, search }: { restaurants: Restaurant
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {restaurants.length > 0 ? (
-                                    restaurants.map((restaurant) => 
+                                {
+                                    restaurants.data.map((restaurant) => 
                                         <TableRow key={restaurant.id}>
                                         <TableCell className="font-medium">{restaurant.en_name}</TableCell>
                                         <TableCell className="font-medium">{restaurant.phone}</TableCell>
@@ -119,7 +120,6 @@ export default function Index({ restaurants, search }: { restaurants: Restaurant
 
                                         <TableCell className="flex flex-row gap-x-2 text-right">
                                         <Link className={buttonVariants({ variant: 'default' })}
-                                            // href={`/restaurants/${restaurant.id}/edit`}>
                                             href={route('admin.restaurants.edit', restaurant.id)}>
                                             Edit
                                         </Link>
@@ -130,16 +130,13 @@ export default function Index({ restaurants, search }: { restaurants: Restaurant
                                         </TableCell>
                                         </TableRow>
                                     )
-                                ) : (
-                                    <TableRow>
-                                        <TableCell colSpan={4} className="text-center py-8 text-gray-500">
-                                            {search ? `No restaurants found for "${search}"` : 'No restaurants found'}
-                                        </TableCell>
-                                    </TableRow>
-                                )}
+                                }
+                                
+                                
                             </TableBody>
                      </Table>
                             
+                            <TablePagination resource={restaurants} />
 
                         </div>
                     </div>

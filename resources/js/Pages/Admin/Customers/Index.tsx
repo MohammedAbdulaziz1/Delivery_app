@@ -1,8 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { Customer, BreadcrumbItem } from '@/types';
+import { Customer, BreadcrumbItem, PaginatedResponse } from '@/types';
 import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
+import { TablePagination } from '@/Components/TablePagination';
 
 import {
     Table,
@@ -21,7 +22,7 @@ import { Input } from '@/components/ui/input';
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ customers, search }: { customers: Customer[], search?: string }) {
+export default function Index({ customers, search }: { customers: PaginatedResponse<Customer>, search?: string }) {
 
     const [searchTerm, setSearchTerm] = useState(search || '');
 
@@ -108,7 +109,7 @@ export default function Index({ customers, search }: { customers: Customer[], se
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {customers.map((customer) => 
+                                {customers.data.map((customer) => 
                                     <TableRow key={customer.id}>
                                     <TableCell className="font-medium">{customer.en_name}</TableCell>
                                     <TableCell className="font-medium">{customer.email}</TableCell>
@@ -141,6 +142,7 @@ export default function Index({ customers, search }: { customers: Customer[], se
                             </TableBody>
                      </Table>
                             
+                     <TablePagination resource={customers} />
 
                         </div>
                     </div>

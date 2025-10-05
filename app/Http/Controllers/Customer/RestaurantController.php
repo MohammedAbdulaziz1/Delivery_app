@@ -27,7 +27,7 @@ class RestaurantController extends Controller
                 return $query->where('en_name', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(10);
 
             $restaurants->load(['media','products']);
             return Inertia::render('Customers/Restaurants/Index', [

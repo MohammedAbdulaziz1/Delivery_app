@@ -21,7 +21,7 @@ class ProductController extends Controller
     {
         return Inertia::render('Admin/Products/Index', [
             
-            'products' =>Product::select('id','en_name','description','price','status')->get(),
+            'products' =>Product::select('id','en_name','description','price','status')->paginate(5),
         ]);
 
     }

@@ -1,8 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { BreadcrumbItem , Product } from '@/types';
+import { BreadcrumbItem , Product, PaginatedResponse } from '@/types';
 import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
+import { TablePagination } from '@/Components/TablePagination';
 
 import {
     Table,
@@ -48,7 +49,7 @@ const statuses: Status[] = [
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ products }: { products: Product[] }) {
+export default function Index({ products }: { products: PaginatedResponse<Product> }) {
 
     const deleteProduct = (id: number) => { 
         console.log(id);
@@ -135,7 +136,7 @@ export default function Index({ products }: { products: Product[] }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {products.map((product) => 
+                                {products.data.map((product) => 
                                     <TableRow key={product.id}>
                                     <TableCell className="font-medium">{product.en_name}</TableCell>
                                     <TableCell className="font-medium">{product.description}</TableCell>
@@ -157,7 +158,8 @@ export default function Index({ products }: { products: Product[] }) {
                                 )}
                             </TableBody>
                      </Table>
-                            
+                            <TablePagination resource={products} />
+
                             </div>
                         </div>
                     </div>

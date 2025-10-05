@@ -21,9 +21,11 @@ class CustomerController extends Controller
     public function index()
     {
         // dd(User::select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get()->toArray());
+        // dd(Auth::user()->restaurants->orders());
+
         return Inertia::render('Restaurants/Customers/Index', [
-            'customers' => Auth::user()->restaurant->customers()->select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->get(),
-        ]);
+            'customers' => Auth::user()->restaurants->orders->customer()->select('id','en_name','email', 'phone', 'status')->where('role', UserRoles::CUSTOMER)->with('media')->paginate(10),
+        ]); 
     }
 
     /**

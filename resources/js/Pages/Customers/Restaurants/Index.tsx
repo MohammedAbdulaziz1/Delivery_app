@@ -1,10 +1,10 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { Customer, BreadcrumbItem, Restaurant, Product } from '@/types';
+import { Customer, BreadcrumbItem, Restaurant, Product, PaginatedResponse } from '@/types';
 import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
 import { useState, FormEvent } from 'react';
-
+import { TablePagination } from '@/Components/TablePagination';
 import {
     Table,
     TableBody,
@@ -25,7 +25,7 @@ import { RestaurantCard as RestaurantCardComponent } from '@/Components/Restaura
 
 
 
-export default function Index({ restaurants, search }: { restaurants: Restaurant[], search?: string }) {
+export default function Index({ restaurants, search }: { restaurants: PaginatedResponse<Restaurant>, search?: string }) {
     const [searchTerm, setSearchTerm] = useState(search || '');
 
     const deleteRestaurant = (id: number) => { 
@@ -97,10 +97,10 @@ export default function Index({ restaurants, search }: { restaurants: Restaurant
                                 <MenuCard MenuCard={restaurant} />
                             ))} */}
 
-                            {restaurants.map((restaurant) => (
+                            {restaurants.data.map((restaurant) => (
                                 <RestaurantCardComponent RestaurantCard={restaurant} />
                             ))}
-
+                            <TablePagination resource={restaurants} />
 
 
                         </div>

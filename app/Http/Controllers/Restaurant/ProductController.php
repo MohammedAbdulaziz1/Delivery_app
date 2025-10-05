@@ -21,7 +21,7 @@ class ProductController extends Controller
     {
         return Inertia::render('Restaurants/Products/Index', [
             
-            'products' =>Auth::user()->restaurants->products()->select('id','en_name','description','price','status')->get(),
+            'products' =>Auth::user()->restaurants->products()->select('id','en_name','description','price','status')->paginate(10),
         ]);
 
     }

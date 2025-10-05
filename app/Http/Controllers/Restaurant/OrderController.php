@@ -18,7 +18,7 @@ class OrderController extends Controller
     public function index()
     {
         return Inertia::render('Restaurants/Orders/Index', [
-            'orders' => Auth::user()->restaurants->orders()->get(),
+            'orders' => Auth::user()->restaurants->orders()->paginate(10),
         ]);
 
     }

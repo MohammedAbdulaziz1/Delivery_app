@@ -26,7 +26,7 @@ class CustomerController extends Controller
                 return $query->where('en_name', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(5);
 
         return Inertia::render('Admin/Customers/Index', [
             'customers' => $customers,

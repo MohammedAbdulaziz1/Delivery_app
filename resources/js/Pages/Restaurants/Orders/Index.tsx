@@ -1,9 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { BreadcrumbItem , Order } from '@/types';
+import { BreadcrumbItem , Order, PaginatedResponse } from '@/types';
 import { Button , buttonVariants  } from '@/components/ui/button';
 import { toast } from 'sonner'; 
-
+import { TablePagination } from '@/Components/TablePagination';
 import {
     Table,
     TableBody,
@@ -19,7 +19,7 @@ import {
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ orders }: { orders: Order[] }) {
+export default function Index({ orders }: { orders: PaginatedResponse<Order> }) {
 
 
     return (
@@ -53,7 +53,7 @@ export default function Index({ orders }: { orders: Order[] }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {orders.map((order) => 
+                                {orders.data.map((order) => 
                                     <TableRow key={order.id}>
                                     <TableCell className="font-medium">{order.id}</TableCell>
                                     <TableCell className="font-medium">{order.customer_id}</TableCell>
@@ -65,7 +65,7 @@ export default function Index({ orders }: { orders: Order[] }) {
                                 )}
                             </TableBody>
                      </Table>
-                            
+                            <TablePagination resource={orders} />
 
                         </div>
                     </div>

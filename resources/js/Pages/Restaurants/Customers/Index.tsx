@@ -1,9 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head , Link , router } from '@inertiajs/react';
-import { Customer, BreadcrumbItem } from '@/types';
+import { Customer, BreadcrumbItem, PaginatedResponse } from '@/types';
 import { Button , buttonVariants  } from '@/Components/ui/button';
 import { toast } from 'sonner'; 
-
+import { TablePagination } from '@/Components/TablePagination';
 import {
     Table,
     TableBody,
@@ -19,16 +19,8 @@ import {
 //     { title: 'Customers', href: '/customer' },
 // ];  
 
-export default function Index({ customers }: { customers: Customer[] }) {
+export default function Index({ customers }: { customers: PaginatedResponse<Customer> }) {
 
-    const deleteCustomer = (id: number) => { 
-        console.log(id);
-        
-        if (confirm('Are you sure?')) {
-            router.delete(route('restaurant.customers.destroy', { id }));
-            toast.success('Customer deleted successfully'); 
-        }
-    }
 
     return (
         <AuthenticatedLayout 
@@ -40,17 +32,11 @@ export default function Index({ customers }: { customers: Customer[] }) {
         >
             <Head title="Customer" />
 
-                        <div className={'mt-8'}>
-                <Link className={buttonVariants({ variant: 'outline' })} href={route('restaurant.customers.create')}>
-                    Create Customer
-                </Link>
-
+        <div className={'mt-8'}>
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-
-                            
 
                      <Table>
                             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
@@ -65,7 +51,7 @@ export default function Index({ customers }: { customers: Customer[] }) {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {customers.map((customer) => 
+                                {customers.data.map((customer) => 
                                     <TableRow key={customer.id}>
                                     <TableCell className="font-medium">{customer.en_name}</TableCell>
                                     <TableCell className="font-medium">{customer.email}</TableCell>
@@ -82,21 +68,11 @@ export default function Index({ customers }: { customers: Customer[] }) {
                                     }
                                     </TableCell> 
 
-                                    <TableCell className="flex flex-row gap-x-2 text-right">
-                                    <Link className={buttonVariants({ variant: 'default' })}
-                                        href={route('restaurant.customers.edit', customer.id)}>
-                                        Edit
-                                    </Link>
-
-                                            <Button variant="destructive" className={'cursor-pointer'} onClick={() => deleteCustomer(customer.id)}>
-                                                Delete
-                                            </Button>
-                                    </TableCell>
                                     </TableRow>
                                 )}
                             </TableBody>
                      </Table>
-                            
+                            <TablePagination resource={customers} />
 
                         </div>
                     </div>

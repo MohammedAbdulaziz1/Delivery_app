@@ -18,7 +18,7 @@ class OrderController extends Controller
     public function index()
     {
         return Inertia::render('Customers/Orders/Index', [
-            'orders' =>Auth::user()->customerOrder()->get(),
+            'orders' =>Auth::user()->customerOrder()->paginate(5),
         ]);
 
     }
