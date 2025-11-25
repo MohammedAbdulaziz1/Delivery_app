@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\UserStatus;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model implements HasMedia
 {
@@ -41,6 +43,15 @@ class Product extends Model implements HasMedia
             'price' => 'decimal:2',
             'status' => UserStatus::class,
     ];
+   }
+
+   protected static function booted(): void
+   {
+       if (Auth::check()) {
+           static::addGlobalScope('by_user', function (Builder $builder) {
+               $builder->where('restaurant_id', Auth::user()->restaurants->id);
+           });
+       }
    }
     
     public function restaurant(){

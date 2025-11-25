@@ -12,11 +12,12 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable  implements HasMedia 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use SoftDeletes , HasFactory, Notifiable,InteractsWithMedia,HasRoles;
+    use SoftDeletes , HasFactory, Notifiable,InteractsWithMedia,HasRoles, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
