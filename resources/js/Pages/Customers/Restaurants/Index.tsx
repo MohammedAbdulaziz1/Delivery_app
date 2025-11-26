@@ -96,12 +96,12 @@ export default function Index({ restaurants, search }: { restaurants: PaginatedR
                             {/* {restaurants.map((restaurant) => (
                                 <MenuCard MenuCard={restaurant} />
                             ))} */}
-
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {restaurants.data.map((restaurant) => (
                                 <RestaurantCardComponent RestaurantCard={restaurant} />
                             ))}
+                            </div>
                             <TablePagination resource={restaurants} />
-
 
                         </div>
                     </div>

@@ -104,9 +104,9 @@ export interface Restaurant {
 
 export interface Order {
     id: number;
-    customer_id: number;
-    restaurant_id: number;
-    driver_id: number;
+    customer: User;
+    restaurant: Restaurant;
+    driver: User;
     status: string;
 };
 

@@ -45,14 +45,14 @@ class Product extends Model implements HasMedia
     ];
    }
 
-   protected static function booted(): void
-   {
-       if (Auth::check()) {
-           static::addGlobalScope('by_user', function (Builder $builder) {
-               $builder->where('restaurant_id', Auth::user()->restaurants->id);
-           });
-       }
-   }
+//    protected static function booted(): void
+//    {
+//        if (Auth::check()) {
+//            static::addGlobalScope('by_user', function (Builder $builder) {
+//                $builder->where('restaurant_id', Auth::user()->restaurants->id);
+//            });
+//        }
+//    }
     
     public function restaurant(){
         return $this->belongsTo(Restaurant::class);

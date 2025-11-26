@@ -45,10 +45,10 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                             <TableHeader>
                                 <TableRow>
-                                <TableHead>Order ID</TableHead>
-                                <TableHead>Customer ID</TableHead>
-                                <TableHead>Restaurant ID</TableHead>
-                                <TableHead>Driver ID</TableHead>
+                                <TableHead>Order </TableHead>
+                                <TableHead>Customer </TableHead>
+                                <TableHead>Restaurant </TableHead>
+                                <TableHead>Driver </TableHead>
                                 <TableHead>Status</TableHead>
 
                                 </TableRow>
@@ -57,9 +57,9 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                                 {orders.data.map((order) => 
                                     <TableRow key={order.id}>
                                     <TableCell className="font-medium">{order.id}</TableCell>
-                                    <TableCell className="font-medium">{order.customer_id}</TableCell>
-                                    <TableCell className="font-medium">{order.restaurant_id}</TableCell>
-                                    <TableCell className="font-medium">{order.driver_id}</TableCell>
+                                    <TableCell className="font-medium">{order.customer.en_name}</TableCell>
+                                    <TableCell className="font-medium">{order.restaurant.en_name}</TableCell>
+                                    <TableCell className="font-medium">{order.driver.en_name}</TableCell>
                                     <TableCell className="font-medium">{order.status}</TableCell>
 
                                     </TableRow>
