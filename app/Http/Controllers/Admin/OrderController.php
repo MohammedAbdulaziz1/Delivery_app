@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index()
     {
         return Inertia::render('Admin/Orders/Index', [
-            'orders' => Order::select('id','status','customer_id','restaurant_id','driver_id')->paginate(5),
+            'orders' => Order::select('id','status','customer_id','restaurant_id','driver_id')->with(['customer:id,en_name','restaurant:id,en_name','driver:id,en_name'])->paginate(5),
         ]);
 
     }

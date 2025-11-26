@@ -79,12 +79,6 @@ return [
             // 'permission' => 'dashboard',
             'icon' => 'home',
         ],
-        [
-            'title' => 'Customers',
-            'routeName' => 'restaurant.customers.index',
-            // 'permission' => 'dashboard',
-            'icon' => 'home',
-        ],
 
 
     ],
