@@ -25,10 +25,17 @@ protected $appends = [
     'mediaFile'
 ];
 
+public function registerMediaCollections(): void
+{
+    $this->addMediaCollection('restaurantLogo')
+        ->useDisk('public')
+        ->singleFile();
+}
+
 public function getMediaFileAttribute()
 {
     if ($this->relationLoaded('media')) {
-        return $this->getFirstMedia();
+        return $this->getFirstMedia('restaurantLogo');
     }
 
     return null;

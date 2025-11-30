@@ -14,34 +14,6 @@ import {
     TableRow,
   } from "@/Components/ui/table";
 
-  import * as React from "react"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "@/Components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/Components/ui/popover"
-type Status = {
-  value: string
-  label: string
-}
-const statuses: Status[] = [
-  {
-    value: "active",
-    label: "Active",
-  },
-  {
-    value: "inactive",
-    label: "Inactive",
-  },
-]
 
 //   const breadcrumbs: BreadcrumbItem[] = [
 //     { title: 'Dashboard', href: '/dashboard' },
@@ -59,10 +31,6 @@ export default function Index({ products }: { products: PaginatedResponse<Produc
         }
     }
 
-    const [open, setOpen] = React.useState(false)
-    const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
-      null
-    )
 
 
     return (
@@ -86,40 +54,6 @@ export default function Index({ products }: { products: PaginatedResponse<Produc
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
 
-                        <div className="flex items-center space-x-4">
-      <p className="text-muted-foreground text-sm">Status</p>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[150px] justify-start">
-            {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0" side="right" align="start">
-          <Command>
-            <CommandList>
-              <CommandEmpty>No results found.</CommandEmpty>
-              <CommandGroup>
-                {statuses.map((status) => (
-                  <CommandItem
-                    key={status.value}
-                    value={status.value}
-                    onSelect={(value) => {
-                      setSelectedStatus(
-                        statuses.find((priority) => priority.value === value) ||
-                          null
-                      )
-                      setOpen(false)
-                    }}
-                  >
-                    {status.label}
-                  </CommandItem>
-                ))}
-              </CommandGroup>
-            </CommandList>
-          </Command>
-        </PopoverContent>
-      </Popover>
-    </div>
 
 
                      <Table>

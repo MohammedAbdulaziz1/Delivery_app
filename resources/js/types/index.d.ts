@@ -4,6 +4,7 @@ export interface User {
     email: string;
     email_verified_at?: string;
     status: string;
+    mediaFile?: MediaFile; 
 }
 
 export type PageProps<
@@ -42,16 +43,16 @@ export interface Product {
 export interface RestaurantCard {
     id: number;
     en_name: string;
-    media?: MediaFile;
+    mediaFile?: MediaFile;
 }
 
 export interface MenuCard {
     id: number;
-    name: string;
-    media?: MediaFile;
+    en_name: string;
+    mediaFile?: MediaFile;
     description: string;
     price: number;
-    products: Product[];
+    product: Product;
 }
 
 export interface MediaFile {
@@ -100,13 +101,14 @@ export interface Restaurant {
     password:string;
     password_confirmation:string;
     products: Product[];
+    mediaFile?: MediaFile;
 };
 
 export interface Order {
     id: number;
     customer: User;
     restaurant: Restaurant;
-    driver: User;
+    driver: Driver;
     status: string;
 };
 

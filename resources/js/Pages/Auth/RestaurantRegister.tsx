@@ -36,7 +36,7 @@ export default function RestaurantRegister() {
             <Head title="Register" />
 
             <form onSubmit={submit}>
-                <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1">
                     <Card>
                         <CardHeader>
                             <CardTitle>Account information</CardTitle>

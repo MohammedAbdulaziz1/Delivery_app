@@ -18,7 +18,7 @@ class OrderController extends Controller
     public function index()
     {
         return Inertia::render('Customers/Orders/Index', [
-            'orders' =>Auth::user()->customerOrder()->paginate(5),
+            'orders' =>Auth::user()->customerOrder()->with(['customer:id,en_name','restaurant:id,en_name','driver:id,en_name'])->paginate(5),
         ]);
 
     }
@@ -36,7 +36,27 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'restaurant_id' => 'required|exists:restaurants,id',
+            'product_id' => 'required|exists:products,id',
+        ]);
 
+        // $driver = User::select->where();
+
+        $order = Order::create([
+            'customer_id' => Auth::id(),
+            'restaurant_id' => $request->restaurant_id,
+            'driver_id' => null,
+            'status' => 'pending',
+        ]);
+
+        // Attach product to order
+        $order->products()->attach($request->product_id, [
+            'quantity' => 1
+        ]);
+
+        return redirect()->route('customer.orders.index')
+            ->with('success', 'Order created successfully');
     }
 
     /**

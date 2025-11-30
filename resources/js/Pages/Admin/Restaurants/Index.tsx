@@ -106,6 +106,7 @@ export default function Index({ restaurants, search }: { restaurants: PaginatedR
                                 <TableHead className="w-[100px]">Name</TableHead>
                                 <TableHead>Phone</TableHead>
                                 <TableHead>Dial cod</TableHead>
+                                <TableHead>Restaurant logo</TableHead>
                                 <TableHead>Action</TableHead>
 
                                 </TableRow>
@@ -117,6 +118,17 @@ export default function Index({ restaurants, search }: { restaurants: PaginatedR
                                         <TableCell className="font-medium">{restaurant.en_name}</TableCell>
                                         <TableCell className="font-medium">{restaurant.phone}</TableCell>
                                         <TableCell className="font-medium">{restaurant.dial_cod}</TableCell>
+                                        <TableCell>{ 
+                                        !restaurant.mediaFile
+                                            ? '-'
+                                            : (
+                                                <a href={restaurant.mediaFile.original_url} target="_blank">
+                                                    <img src={restaurant.mediaFile.original_url} className={'w-8 h-8'} />
+                                                </a>
+                                            )
+                                          }
+                                          </TableCell>       
+
 
                                         <TableCell className="flex flex-row gap-x-2 text-right">
                                         <Link className={buttonVariants({ variant: 'default' })}

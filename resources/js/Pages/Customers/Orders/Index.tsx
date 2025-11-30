@@ -45,7 +45,10 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                             <TableHeader>
                                 <TableRow>
                                 <TableHead>Order ID</TableHead>
+                                <TableHead>Driver </TableHead>
+                                <TableHead>Restaurant </TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>Actions</TableHead>
 
                                 </TableRow>
                             </TableHeader>
@@ -53,7 +56,21 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                                 {orders.data.map((order) => 
                                     <TableRow key={order.id}>
                                     <TableCell className="font-medium">{order.id}</TableCell>
+                                    <TableCell className="font-medium">{order.driver?.en_name ?? '-'}</TableCell>
+                                    <TableCell className="font-medium">{order.restaurant.en_name}</TableCell>
                                     <TableCell className="font-medium">{order.status}</TableCell>
+                                    <TableCell>
+                                        {order.status === 'driver_accept' && (
+                                            <Link href={route('customer.orders.edit', order.id)}>
+                                                <Button variant="outline" size="sm">Accept</Button>
+                                            </Link>
+                                        )}
+                                        {order.status !== 'driver_accept' && order.customer.id && (
+                                            <Link href={route('customer.orders.edit', order.id)}>
+                                                <Button variant="outline" size="sm">View</Button>
+                                            </Link>
+                                        )}
+                                    </TableCell>
 
                                     </TableRow>
                                 )}

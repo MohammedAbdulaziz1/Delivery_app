@@ -61,7 +61,7 @@ class RestaurantController extends Controller
 
     ]);
       
-      $user->restaurants()->create([
+      $restaurant = $user->restaurants()->create([
         'en_name' => $request->en_name,
         'ar_name' => $request->ar_name,
         'dial_cod' => $request->dial_cod,
@@ -69,6 +69,9 @@ class RestaurantController extends Controller
          
     ]);
 
+    if ($request->hasFile('media')) { 
+      $restaurant->addMedia($request->file('media'))->toMediaCollection('restaurantLogo');
+    } 
 
       // $restaurant->user()->create(['owner_id'=>1]);
  

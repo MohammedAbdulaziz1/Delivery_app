@@ -62,11 +62,18 @@ class User extends Authenticatable  implements HasMedia
     protected $appends = [
         'mediaFile'
     ];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('profileImage')
+            ->useDisk('public')
+            ->singleFile();
+    }
  
     public function getMediaFileAttribute()
     {
         if ($this->relationLoaded('media')) {
-            return $this->getFirstMedia();
+            return $this->getFirstMedia('profileImage');
         }
  
         return null;

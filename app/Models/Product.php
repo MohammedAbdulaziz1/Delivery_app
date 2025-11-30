@@ -29,10 +29,17 @@ class Product extends Model implements HasMedia
        'mediaFile'
    ];
 
+   public function registerMediaCollections(): void
+   {
+       $this->addMediaCollection('productImage')
+           ->useDisk('public')
+           ->singleFile();
+   }
+
    public function getMediaFileAttribute()
    {
        if ($this->relationLoaded('media')) {
-           return $this->getFirstMedia();
+           return $this->getFirstMedia('productImage');
        }
 
        return null;

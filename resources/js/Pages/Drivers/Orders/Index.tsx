@@ -44,10 +44,11 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                             {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                             <TableHeader>
                                 <TableRow>
-                                <TableHead>Order </TableHead>
+                                <TableHead>Order ID</TableHead>
                                 <TableHead>Customer </TableHead>
                                 <TableHead>Restaurant </TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>Actions</TableHead>
 
                                 </TableRow>
                             </TableHeader>
@@ -58,6 +59,32 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                                     <TableCell className="font-medium">{order.customer.en_name}</TableCell>
                                     <TableCell className="font-medium">{order.restaurant.en_name}</TableCell>
                                     <TableCell className="font-medium">{order.status}</TableCell>
+                                    <TableCell>
+                                        {order.status === 're_finished' && (
+                                            <Link href={route('driver.order.accept', order.id)}>
+                                                <Button variant="outline" size="sm">Driver accept</Button>
+                                            </Link>
+                                        )
+                                        }
+                                        {order.status === 'driver_accept' && (
+                                            <Link href={route('driver.order.receive', order.id)}>
+                                                <Button variant="outline" size="sm">Driver receive</Button>
+                                            </Link>
+                                        )
+                                        }
+                                        {order.status === 'driver_receive' && (
+                                            <Link href={route('driver.reached',order.id)}>
+                                                <Button variant="outline" size="sm">Driver reached</Button>
+                                            </Link>
+                                        )
+                                        }
+                                        {order.status === 'driver_reached' && (
+                                            <Link href={route('driver.customer.accept', order.id)}>
+                                                <Button variant="outline" size="sm">Customer accept</Button>
+                                            </Link>
+                                        )
+                                        }
+                                    </TableCell>
 
                                     </TableRow>
                                 )}
