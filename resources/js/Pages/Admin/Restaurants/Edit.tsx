@@ -14,18 +14,20 @@ type EditRestaurantForm = {
     phone?: string;
     password?: string;
     password_confirmation?: string;
+    media?: string | null;
 };
  
 export default function Edit({ restaurant }: { restaurant : Restaurant }) {
     const restaurantName = useRef<HTMLInputElement>(null);
  
-    const { data, setData, errors, put, reset, processing } = useForm<Required<EditRestaurantForm>>({
+    const { data, setData, errors, put, reset, processing, progress } = useForm<Required<EditRestaurantForm>>({
         en_name: restaurant.en_name,
         ar_name:restaurant.ar_name,
         dial_cod:restaurant.dial_cod,
         phone:restaurant.phone,
         password:restaurant.password,
         password_confirmation:restaurant.password_confirmation,
+        media:restaurant.mediaFile?.original_url ?? null, 
     });
  
     const EditRestaurant: FormEventHandler = (e) => {
@@ -144,6 +146,45 @@ export default function Edit({ restaurant }: { restaurant : Restaurant }) {
         
                             <InputError message={errors.password_confirmation} />
                         </div>
+
+                        <div className="grid gap-2">
+                        <Label htmlFor="media">Restaurant Media</Label>
+                    
+                        <Input
+                            id="media"
+                            onChange={(e) => setData('media', e.target.files[0])}
+                            className="mt-1 block w-full"
+                            type="file"
+                        />
+                    
+                        {progress && (
+                            <progress value={progress.percentage} max="100">
+                                {progress.percentage}%
+                            </progress>
+                        )}
+                    
+                        <InputError message={errors.media} />
+                    </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="media">File</Label>
+                    
+                        <Input
+                            id="media"
+                            onChange={(e) => setData('media', e.target.files[0])}
+                            className="mt-1 block w-full"
+                            type="file"
+                        />
+                    
+                        {progress && (
+                            <progress value={progress.percentage} max="100">
+                                {progress.percentage}%
+                            </progress>
+                        )}
+                    
+                        <InputError message={errors.media} />
+                    </div>
+
                     
 
                     <div className="flex items-center gap-4">

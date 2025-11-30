@@ -15,7 +15,7 @@ class HomeController extends Controller
     
     public function menu(Restaurant $restaurant)
     {
-        $restaurant->load(['media','products']);
+        $restaurant->load(['media','products','products.media']);
         return Inertia::render('Customers/Restaurants/Menu', [
             'restaurants' => $restaurant
         ]);

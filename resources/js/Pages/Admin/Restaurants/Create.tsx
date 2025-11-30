@@ -15,12 +15,13 @@ type CreateRestaurantForm = {
     email?: string;
     password?: string;
     password_confirmation?: string;
+    media?: string;
 }
 
 export default function Create() {
     const restaurantName = useRef<HTMLInputElement>(null);
     
-    const { data, setData, errors, post, reset, processing } = useForm<Required<CreateRestaurantForm>>({ 
+    const { data, setData, errors, post, reset, processing, progress } = useForm<Required<CreateRestaurantForm>>({ 
         en_name: '',
         ar_name: '',
         dial_cod: '',
@@ -28,6 +29,7 @@ export default function Create() {
         email: '',
         password: '',
         password_confirmation: '',
+        media: '',
     }); 
 
     const createRestaurant: FormEventHandler = (e) => {
@@ -169,6 +171,46 @@ export default function Create() {
  
                         <InputError message={errors.password_confirmation} />
                     </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="media">Media</Label>
+                    
+                        <Input
+                            id="media"
+                            onChange={(e) => setData('media', e.target.files[0])}
+                            className="mt-1 block w-full"
+                            type="file"
+                        />
+                    
+                        {progress && (
+                            <progress value={progress.percentage} max="100">
+                                {progress.percentage}%
+                            </progress>
+                        )}
+                    
+                        <InputError message={errors.media} />
+                    </div>
+
+                    <div className="grid gap-2">
+                        <Label htmlFor="media">Restaurant Media</Label>
+                    
+                        <Input
+                            id="media"
+                            onChange={(e) => setData('media', e.target.files[0])}
+                            className="mt-1 block w-full"
+                            type="file"
+                        />
+                    
+                        {progress && (
+                            <progress value={progress.percentage} max="100">
+                                {progress.percentage}%
+                            </progress>
+                        )}
+                    
+                        <InputError message={errors.media} />
+                    </div>
+
+
 
  
                     <div className="flex items-center gap-4">

@@ -15,7 +15,7 @@ type EditCustomerForm = {
     email?: string;
     password?: string;
     password_confirmation?: string;
-    media?: string; 
+    media?: string | null; 
 };
  
 export default function Edit({ customer }: { customer : Customer }) {
@@ -29,7 +29,7 @@ export default function Edit({ customer }: { customer : Customer }) {
         email:customer.email,
         password:customer.password,
         password_confirmation:customer.password_confirmation,
-        media: '', 
+        media:customer.mediaFile?.original_url ?? null, 
     });
  
     const EditCustomer: FormEventHandler = (e) => {
