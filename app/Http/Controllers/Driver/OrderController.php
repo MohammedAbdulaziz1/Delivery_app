@@ -17,8 +17,19 @@ class OrderController extends Controller
 {
     public function index()
     {
+        // Show orders with status "prepare" that need a driver, or orders assigned to this driver
+        $orders = Order::where(function($query) {
+            $query->where(function($q) {
+                $q->where('status', 'prepare')
+                  ->whereNull('driver_id');
+            })->orWhere('driver_id', Auth::id());
+        })
+        ->with(['driver:id,en_name','restaurant:id,en_name','customer:id,en_name'])
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
         return Inertia::render('Drivers/Orders/Index', [
-            'orders' => Auth::user()->driverOrder()->with(['customer:id,en_name','restaurant:id,en_name'])->paginate(5),
+            'orders' => $orders,
         ]);
 
     }
@@ -69,6 +80,26 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
 
+    }
+
+    public function acceptOrder(Order $order){
+        $order->update(['status' => 'driver_accept']);
+        return redirect()->route('driver.orders.index');
+    }
+
+    public function receiveOrder(Order $order){
+        $order->update(['status' => 'driver_receive']);
+        return redirect()->route('driver.orders.index');
+    }
+    
+    public function reachedDriver(Order $order){
+        $order->update(['status' => 'driver_reached']);
+        return redirect()->route('driver.orders.index');
+    }
+
+    public function acceptCustomer(Order $order){
+        $order->update(['status' => 'customer_accept']);
+        return redirect()->route('driver.orders.index');
     }
 
 }

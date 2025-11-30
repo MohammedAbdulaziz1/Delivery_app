@@ -48,6 +48,7 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                                 <TableHead>Customer </TableHead>
                                 <TableHead>Driver</TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>Actions</TableHead>
 
                                 </TableRow>
                             </TableHeader>
@@ -56,9 +57,29 @@ export default function Index({ orders }: { orders: PaginatedResponse<Order> }) 
                                     <TableRow key={order.id}>
                                     <TableCell className="font-medium">{order.id}</TableCell>
                                     <TableCell className="font-medium">{order.customer.en_name}</TableCell>
-                                    <TableCell className="font-medium">{order.driver.en_name}</TableCell>
+                                    <TableCell className="font-medium">{order.driver?.en_name || 'Not assigned'}</TableCell>
                                     <TableCell className="font-medium">{order.status}</TableCell>
+                                    <TableCell>
+                                        
+                                    {order.status === 'pending' && (
+                                        <Link href={route('restaurant.order.accept', {order :order.id})}>
+                                            <Button variant="outline" size="sm">Accept</Button>
+                                        </Link>)
+                                    }
+                                    {order.status === 're_accept' && (
+                                        <Link href={route('restaurant.order.prepare', {order :order.id})}>
+                                            <Button variant="outline" size="sm">Prepare</Button>
+                                        </Link>)
+                                    }
+                                    {order.status === 're_prepare' && (
+                                        <Link href={route('restaurant.order.finished', {order :order.id})}>
+                                            <Button variant="outline" size="sm">Finished</Button>
+                                        </Link>)
+                                    }
 
+
+                                    </TableCell>
+                                        
                                     </TableRow>
                                 )}
                             </TableBody>

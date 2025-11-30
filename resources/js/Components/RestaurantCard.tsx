@@ -10,7 +10,7 @@ export function RestaurantCard({ RestaurantCard }: { RestaurantCard: RestaurantC
                     <CardHeader>
                         <CardTitle>{RestaurantCard.en_name}</CardTitle>
                         <CardDescription>
-                            <img src={RestaurantCard.media?.original_url || ''} alt="Restaurants Image" className="w-full h-full object-cover"/>
+                                 <img src={RestaurantCard.mediaFile?.original_url || '-'} alt="Restaurants Image" className="w-full h-24 object-cover "/>
                         </CardDescription>
                         <Link href={route('customer.menu', { restaurant: RestaurantCard.id })}>
                             <Button>

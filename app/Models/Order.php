@@ -15,7 +15,6 @@ class Order extends Model
         'customer_id',
         'driver_id',
         'restaurant_id',
-        'product_id',
     ];
 
     public function customer(){

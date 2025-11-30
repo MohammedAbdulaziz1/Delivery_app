@@ -71,4 +71,18 @@ class OrderController extends Controller
 
     }
 
+    public function acceptOrder(Order $order){
+        $order->update(['status' => 're_accept']);
+        return redirect()->route('restaurant.orders.index');
+    }
+
+    public function prepareOrder(Order $order){
+        $order->update(['status' => 're_prepare']);
+        return redirect()->route('restaurant.orders.index');
+    }
+
+    public function finishedOrder(Order $order){
+        $order->update(['status' => 're_finished']);
+        return redirect()->route('restaurant.orders.index');
+    }
 }
